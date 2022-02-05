@@ -1,18 +1,17 @@
-import Head from "next/head";
-
 export default function Home() {
   return (
-    <div className="container">
-      <Head>
-        <title>Next.js Starter!</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-      </main>
+    <div>
+      <h1 className="text-gray-100">
+        This is just a side project I am working on. It is not out yet and it
+        would be helpful if you can let me know where you found the link to this
+        website from on{" "}
+        <a
+          className="transition/200 text-blue-500 hover:opacity-60"
+          href="https://twitter.com/AnishDe12020"
+        >
+          Twitter
+        </a>
+      </h1>
     </div>
   );
 }
