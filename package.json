@@ -11,7 +11,8 @@
     "format": "prettier --check \"{components,data,pages,styles,utils,layouts}/**/*.{js,jsx,ts,tsx,css,scss,json,yaml,md}\"",
     "format:fix": "prettier --write \"{components,data,pages,styles,utils,layouts}/**/*.{js,jsx,ts,tsx,css,scss,json,yaml,md}\"",
     "types:check": "tsc --pretty --noEmit",
-    "ci": "rm -rf node_modules && yarn install --frozen-lockfile"
+    "ci": "rm -rf node_modules && yarn install --frozen-lockfile",
+    "prepare": "husky install"
   },
   "dependencies": {
     "next": "^12.0.7",
@@ -19,6 +20,8 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.1.0",
+    "@commitlint/config-conventional": "^16.0.0",
     "@netlify/plugin-nextjs": "^4.0.0",
     "@types/node": "^17.0.14",
     "@types/react": "^17.0.39",
@@ -27,6 +30,7 @@
     "eslint-config-google": "^0.14.0",
     "eslint-config-next": "^12.0.10",
     "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.4",
     "postcss": "^8.4.6",
     "prettier": "^2.5.1",
     "prettier-plugin-tailwindcss": "^0.1.5",
