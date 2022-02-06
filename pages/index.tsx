@@ -1,4 +1,9 @@
-export default function Home() {
+import { useSession } from "next-auth/react";
+
+const Home = () => {
+  const { data: session } = useSession();
+
+  console.log(session);
   return (
     <div>
       <h1 className="text-gray-100">
@@ -14,4 +19,6 @@ export default function Home() {
       </h1>
     </div>
   );
-}
+};
+
+export default Home;
