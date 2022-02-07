@@ -12,9 +12,10 @@ if (!process.env.MONGODB_URI) {
 if (process.env.NODE_ENV === "development") {
   if (!global._mongoClientPromise) {
     global._mongoClientPromise = client.connect();
-  } else {
-    clientPromise = global._mongoClientPromise;
   }
+  clientPromise = global._mongoClientPromise;
+} else {
+  clientPromise = client.connect();
 }
 
 export default clientPromise;
