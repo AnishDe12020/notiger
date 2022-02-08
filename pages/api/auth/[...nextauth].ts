@@ -11,4 +11,11 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    async session({ session, token, user }) {
+      // Store the user's profile in the session
+      session.user = user;
+      return session;
+    },
+  },
 });
