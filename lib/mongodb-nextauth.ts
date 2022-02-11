@@ -11,7 +11,7 @@ if (!process.env.MONGODB_URI) {
 
 if (process.env.NODE_ENV === "development") {
   if (!global._mongoClientPromise) {
-    global._mongoClientPromise = client.connect();
+                           global._mongoClientPromise = client.connect();
   }
   clientPromise = global._mongoClientPromise;
 } else {
