@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import dbConnect from "../../../lib/mongoose";
+import dbConnect from "../../../lib/dbConnect";
 import Project from "../../../models/Project";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
