@@ -11,7 +11,8 @@ import type {
   AdapterUser,
   VerificationToken,
 } from "next-auth/adapters";
-import type { Account } from "next-auth";
+import type { Account, Session } from "next-auth";
+import type { VerificationToken as IVerificationToken } from "../types/NextAuth";
 import dbConnect from "./dbConnect";
 
 export const format = {
@@ -75,7 +76,7 @@ export const CustomMongooseAdapter = (): Adapter => {
       return from<AdapterUser>(user);
     },
     async getUserByAccount(data) {
-      const account = await AccountModel.findOne(data);
+      const account: Account = await AccountModel.findOne(data);
       if (!account) return null;
       const user = await UserModel.findById(account.userId).lean();
       if (!user) return null;
@@ -105,7 +106,7 @@ export const CustomMongooseAdapter = (): Adapter => {
       return from<Account>(account);
     },
     async getSessionAndUser(sessionToken) {
-      const session = await SessionModel.findOne({
+      const session: Session = await SessionModel.findOne({
         sessionToken: sessionToken,
       }).lean();
       if (!session) return null;
@@ -138,9 +139,8 @@ export const CustomMongooseAdapter = (): Adapter => {
       return from<VerificationToken>(verificationToken);
     },
     async useVerificationToken(data) {
-      const verificationToken = await VerificationTokenModel.findOneAndDelete(
-        data
-      ).lean();
+      const verificationToken: IVerificationToken =
+        await VerificationTokenModel.findOneAndDelete(data).lean();
       if (!verificationToken) return null;
       // eslint-disable-next-line no-unused-vars
       const { _id, __v, ...rest } = verificationToken;
