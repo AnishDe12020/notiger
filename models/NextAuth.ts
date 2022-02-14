@@ -6,6 +6,7 @@ export const userSchema = new Schema<User>({
   email: { type: String, unique: true },
   emailVerified: { type: Date },
   image: { type: String },
+  projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
 });
 
 export const accountSchema = new Schema<Account>({
