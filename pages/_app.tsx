@@ -1,13 +1,23 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 
-import { SessionProvider } from "next-auth/react";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn,
+} from "@clerk/nextjs";
 
 function Application({ Component, pageProps }: AppProps) {
   return (
-    <SessionProvider>
-      <Component {...pageProps} />
-    </SessionProvider>
+    <ClerkProvider>
+      <SignedIn>
+        <Component {...pageProps} />
+      </SignedIn>
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
+    </ClerkProvider>
   );
 }
 

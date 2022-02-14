@@ -1,9 +1,9 @@
-import { useSession } from "next-auth/react";
+import { useUser } from "@clerk/nextjs";
 
 const Home = () => {
-  const { data: session } = useSession();
+  const userData = useUser();
 
-  console.log(session);
+  console.log(userData);
   return (
     <div>
       <h1 className="text-gray-100">
