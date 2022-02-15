@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 
 import {
   ClerkProvider,
@@ -8,15 +9,27 @@ import {
   RedirectToSignIn,
 } from "@clerk/nextjs";
 
+const publicPages = ["/"];
+
 function Application({ Component, pageProps }: AppProps) {
+  const { pathname } = useRouter();
+
+  const isPublicPage = publicPages.includes(pathname);
+
   return (
     <ClerkProvider>
-      <SignedIn>
+      {isPublicPage ? (
         <Component {...pageProps} />
-      </SignedIn>
-      <SignedOut>
-        <RedirectToSignIn />
-      </SignedOut>
+      ) : (
+        <>
+          <SignedIn>
+            <Component {...pageProps} />
+          </SignedIn>
+          <SignedOut>
+            <RedirectToSignIn />
+          </SignedOut>
+        </>
+      )}
     </ClerkProvider>
   );
 }

@@ -1,9 +1,4 @@
-import { useUser } from "@clerk/nextjs";
-
 const Home = () => {
-  const userData = useUser();
-
-  console.log(userData);
   return (
     <div>
       <h1 className="text-gray-100">
