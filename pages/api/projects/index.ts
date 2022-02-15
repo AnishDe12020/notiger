@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const project = new Project({
           name: req.body.name,
           description: req.body?.description,
-          ownerId,
+          owner: ownerId,
         });
 
         project.save((err, project) => {
