@@ -16,12 +16,6 @@ const StreamSchema = new mongoose.Schema({
   projectId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Project",
-    required: true,
-  },
-  ownerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
   },
 });
 
