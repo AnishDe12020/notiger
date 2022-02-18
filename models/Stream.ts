@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import IStream from "../types/Stream";
 
-const StreamSchema = new mongoose.Schema({
+const StreamSchema = new mongoose.Schema<IStream>({
   name: {
     type: String,
     required: true,
@@ -9,7 +10,7 @@ const StreamSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  createdAt: {
+  updatedAt: {
     type: Date,
     default: Date.now,
   },

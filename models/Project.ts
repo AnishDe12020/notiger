@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import type IProject from "../types/Project";
 
-const ProjectSchema = new mongoose.Schema({
+const ProjectSchema = new mongoose.Schema<IProject>({
   name: {
     type: String,
     required: true,
@@ -9,11 +10,11 @@ const ProjectSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  createdAt: {
+  updatedAt: {
     type: Date,
     default: Date.now,
   },
-  owner: {
+  ownerId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },

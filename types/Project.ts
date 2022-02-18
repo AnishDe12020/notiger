@@ -1,12 +1,12 @@
 import type { Types } from "mongoose";
 
-interface Project {
+interface IProject {
   _id: Types.ObjectId;
-  __v: string;
+  __v: number;
   name: string;
   description: string | null;
-  createdAt: Date;
+  updatedAt: Date;
   ownerId: Types.ObjectId;
 }
 
-export default Project;
+export default IProject;
