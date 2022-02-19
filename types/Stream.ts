@@ -1,7 +1,7 @@
 import type { Types } from "mongoose";
 
 interface IStream {
-  _id: string;
+  _id: Types.ObjectId;
   __v: number;
   name: string;
   description: string;
