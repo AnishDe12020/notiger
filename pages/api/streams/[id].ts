@@ -27,10 +27,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     case "PUT":
       try {
-        const stream = await Stream.findByIdAndUpdate(id, {
-          name: req.body.name,
-          description: req.body.description,
-        });
+        const stream = await Stream.findByIdAndUpdate(
+          id,
+          {
+            name: req.body.name,
+            description: req.body.description,
+          },
+          { new: true }
+        );
         if (!stream) {
           return res.status(404).json({
             error: "Stream not found",

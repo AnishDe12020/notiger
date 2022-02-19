@@ -24,9 +24,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     case "PUT":
       try {
-        const project = await Project.findByIdAndUpdate(id, {
-          name: req.body.name,
-        });
+        const project = await Project.findByIdAndUpdate(
+          id,
+          {
+            name: req.body.name,
+            description: req.body.description,
+          },
+          { new: true }
+        );
         if (!project) {
           return res.status(404).json({ error: "Project not found" });
         }
