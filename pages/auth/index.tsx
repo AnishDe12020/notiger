@@ -34,8 +34,12 @@ export const getServerSideProps = async context => {
   const session = await getSession(context);
 
   if (session && context.query.redirectTo) {
-    context.res.writeHead(302, { Location: context.query.redirectTo });
-    return context.res.end();
+    return {
+      redirect: {
+        destination: context.query.redirectTo,
+        permanent: false,
+      },
+    };
   }
 
   return {
