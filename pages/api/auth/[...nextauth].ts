@@ -13,7 +13,6 @@ export default NextAuth({
   ],
   callbacks: {
     async session({ session, token, user }) {
-      // Store the user's profile in the session
       session.user = user;
       return session;
     },
