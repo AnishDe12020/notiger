@@ -6,6 +6,7 @@ import FormikInputGroup from "../../components/FormikInputGroup";
 import * as Yup from "yup";
 
 import Modal from "../../components/Modal";
+import axios from "axios";
 
 const CreateProjectValidationSchema = Yup.object().shape({
   name: Yup.string().required("Name is a required field"),
@@ -25,11 +26,22 @@ const DashboardPage: NextPage = () => {
             description: "",
           }}
           validationSchema={CreateProjectValidationSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              console.log(values);
-              setSubmitting(false);
-            }, 2000);
+          onSubmit={async (values, { setSubmitting }) => {
+            // @ts-ignore
+            const { data, error } = await axios.post("/api/projects", {
+              name: values.name,
+              description: values.description,
+              // @ts-ignore
+              ownerId: session.user.id,
+            });
+
+            if (error) {
+              console.error(error);
+            } else {
+              console.log(data);
+            }
+
+            setSubmitting(false);
           }}
         >
           {({ isSubmitting }) => (

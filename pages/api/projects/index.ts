@@ -21,28 +21,30 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     case "POST":
       try {
+        console.log(req.body);
         const ownerId = new ObjectId(req.body.ownerId);
         const project = new Project({
           name: req.body.name,
           description: req.body?.description,
-          owner: ownerId,
+          ownerId: ownerId,
         });
 
         project.save((err, project) => {
           if (err) {
-            res.status(400).json({ error: err.message });
+            console.log(err);
+            return res.status(400).json({ error: err.message });
           } else {
-            res.status(200).json({ data: project });
+            return res.status(200).json({ data: project });
           }
         });
       } catch (err) {
-        res.status(400).json({ error: err.message });
+        return res.status(400).json({ error: err.message });
       }
       break;
 
     default:
       res.setHeader("Allow", ["GET", "POST"]);
-      res.status(405).end(`Method ${method} Not Allowed`);
+      return res.status(405).end(`Method ${method} Not Allowed`);
   }
 };
 
