@@ -52,7 +52,7 @@ const Modal = ({
           <Dialog.Content
             className={cx(
               "fixed z-50",
-              "w-[95vw] max-w-md rounded-lg p-4 md:w-full",
+              "w-[95vw] max-w-md rounded-xl p-8 md:w-full",
               "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
               "bg-gray-900",
               "focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-60"
@@ -65,11 +65,11 @@ const Modal = ({
             {closable && (
               <Dialog.Close
                 className={cx(
-                  "absolute top-4 right-4 inline-flex items-center justify-center rounded-full p-1",
+                  "absolute top-6 right-6 inline-flex items-center justify-center rounded-full p-1",
                   "focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-60"
                 )}
               >
-                <HiX className="h-4 w-4 text-gray-500 hover:opacity-60" />
+                <HiX className="h-6 w-6 text-gray-500 hover:opacity-60" />
               </Dialog.Close>
             )}
           </Dialog.Content>
