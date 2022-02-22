@@ -35,13 +35,13 @@ const DashboardPage: NextPage = () => {
             description: "",
           }}
           validationSchema={CreateProjectValidationSchema}
-          onSubmit={async (values, { setSubmitting, resetForm }) => {
+          onSubmit={async (values, { setSubmitting }) => {
             // @ts-ignore
             const { data, error } = await axios.post("/api/projects", {
               name: values.name,
               description: values.description,
               // @ts-ignore
-              // ownerId: session.user.id,
+              ownerId: session.user.id,
             });
 
             if (error) {
