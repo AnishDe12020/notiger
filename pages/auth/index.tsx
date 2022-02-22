@@ -3,6 +3,7 @@ import { getSession, signIn, signOut, useSession } from "next-auth/react";
 // import { FcGoogle } from "react-icons/fc";
 // import { CgGoogle } from "react-icons/cg";
 import { ImGoogle } from "react-icons/im";
+import Button from "../../components/Button";
 
 const AuthPage: NextPage = () => {
   const { data: session } = useSession();
@@ -11,20 +12,14 @@ const AuthPage: NextPage = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       {session ? (
-        <button
-          onClick={() => signOut()}
-          className="flex items-center justify-center space-x-3 rounded-lg bg-red-500 px-4 py-2 text-lg font-medium text-gray-900 hover:opacity-60"
-        >
+        <Button onClick={() => signOut()} danger>
           Sign Out
-        </button>
+        </Button>
       ) : (
-        <button
-          onClick={() => signIn("google")}
-          className="flex items-center justify-center space-x-3 rounded-lg bg-gray-100 px-4 py-2 text-lg font-medium text-gray-900 hover:opacity-60"
-        >
+        <Button onClick={() => signIn("google")}>
           <ImGoogle className="h-5 w-5" />
           <span>Sign in with Google</span>
-        </button>
+        </Button>
       )}
     </div>
   );
