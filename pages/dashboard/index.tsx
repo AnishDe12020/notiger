@@ -9,7 +9,7 @@ const DashboardPage: NextPage = () => {
 
   return (
     <div className="text-white">
-      <Modal triggerText="Open Dialog" title="Title">
+      <Modal triggerText="Open e" title="Title">
         <p>Test</p>
       </Modal>
     </div>

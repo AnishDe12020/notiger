@@ -23,7 +23,7 @@ const Modal = ({
   return (
     <Dialog.Root onOpenChange={toggleOpen} open={isOpen}>
       <Dialog.Trigger asChild>
-        <Button>Open Dialog</Button>
+        <Button>{triggerText}</Button>
       </Dialog.Trigger>
       <Transition.Root show={isOpen}>
         <Transition.Child
@@ -58,7 +58,7 @@ const Modal = ({
               "focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-60"
             )}
           >
-            <Dialog.Title className="mb-4 text-lg font-semibold text-gray-100">
+            <Dialog.Title className="0 mb-4 text-lg font-semibold text-gray-100">
               {title}
             </Dialog.Title>
             {children}
