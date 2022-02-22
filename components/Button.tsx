@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { Spinner } from "./Icons";
 
 interface IButtonProps {
   className?: string;
@@ -6,6 +7,7 @@ interface IButtonProps {
   danger?: boolean;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
+  loading?: boolean;
 }
 
 const Button = ({
@@ -14,6 +16,7 @@ const Button = ({
   danger,
   onClick,
   type,
+  loading,
 }: IButtonProps): JSX.Element => {
   return (
     <button
@@ -23,7 +26,7 @@ const Button = ({
       } px-3 py-1 text-lg font-medium text-gray-900 transition duration-200 hover:opacity-60 ${className}`}
       type={type}
     >
-      {children}
+      {loading ? <Spinner className="h-7 w-7 text-gray-900" /> : children}
     </button>
   );
 };

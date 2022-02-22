@@ -10,21 +10,24 @@ const DashboardPage: NextPage = () => {
   console.log(session);
 
   return (
-    <div className="text-white">
-      <Modal triggerText="Open e" title="Title">
+    <div>
+      <Modal triggerText="Create Project" title="Create Project">
         <Formik
           initialValues={{
             name: "",
             description: "",
           }}
-          onSubmit={values => {
-            console.log(values);
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              console.log(values);
+              setSubmitting(false);
+            }, 2000);
           }}
         >
           {({ isSubmitting }) => (
             <Form className="space-y-4">
               <div className="flex flex-col space-y-2">
-                <label htmlFor="name" className="opacity-80">
+                <label htmlFor="name" className="text-gray-100">
                   Name
                 </label>
                 <Field
@@ -35,7 +38,7 @@ const DashboardPage: NextPage = () => {
                 />
               </div>
               <div className="flex flex-col space-y-2">
-                <label htmlFor="description" className="opacity-80">
+                <label htmlFor="description" className="text-gray-100">
                   Description
                 </label>
                 <Field
@@ -46,7 +49,9 @@ const DashboardPage: NextPage = () => {
                   className="rounded-lg border-2 bg-gray-900 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-60"
                 />
               </div>
-              <Button type="submit">Create Project</Button>
+              <Button loading={isSubmitting} type="submit" className="w-40">
+                Create Project
+              </Button>
             </Form>
           )}
         </Formik>
