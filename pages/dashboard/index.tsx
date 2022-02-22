@@ -7,6 +7,7 @@ import * as Yup from "yup";
 
 import Modal from "../../components/Modal";
 import axios from "axios";
+import { useState } from "react";
 
 const CreateProjectValidationSchema = Yup.object().shape({
   name: Yup.string().required("Name is a required field"),
@@ -17,9 +18,16 @@ const DashboardPage: NextPage = () => {
   const { data: session } = useSession();
   console.log(session);
 
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   return (
     <div>
-      <Modal triggerText="Create Project" title="Create Project">
+      <Modal
+        isOpen={modalOpen}
+        toggleOpen={setModalOpen}
+        triggerText="Create Project"
+        title="Create Project"
+      >
         <Formik
           initialValues={{
             name: "",
@@ -42,6 +50,7 @@ const DashboardPage: NextPage = () => {
             }
 
             setSubmitting(false);
+            setModalOpen(false);
           }}
         >
           {({ isSubmitting }) => (

@@ -1,5 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { Fragment, ReactNode, useState } from "react";
+import { Fragment, ReactNode } from "react";
 import { Transition } from "@headlessui/react";
 import Button from "./Button";
 import cx from "classnames";
@@ -10,6 +10,8 @@ interface IModalProps {
   children: ReactNode;
   closable?: boolean;
   triggerText: string;
+  isOpen: boolean;
+  toggleOpen: (modalOpen: boolean) => void;
 }
 
 const Modal = ({
@@ -17,9 +19,9 @@ const Modal = ({
   children,
   closable = true,
   triggerText,
+  isOpen,
+  toggleOpen,
 }: IModalProps): JSX.Element => {
-  const [isOpen, toggleOpen] = useState<boolean>(false);
-
   return (
     <Dialog.Root onOpenChange={toggleOpen} open={isOpen}>
       <Dialog.Trigger asChild>
