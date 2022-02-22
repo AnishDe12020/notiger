@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import Modal from "../../components/Modal";
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const CreateProjectValidationSchema = Yup.object().shape({
   name: Yup.string().required("Name is a required field"),
@@ -34,23 +35,27 @@ const DashboardPage: NextPage = () => {
             description: "",
           }}
           validationSchema={CreateProjectValidationSchema}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={async (values, { setSubmitting, resetForm }) => {
             // @ts-ignore
             const { data, error } = await axios.post("/api/projects", {
               name: values.name,
               description: values.description,
               // @ts-ignore
-              ownerId: session.user.id,
+              // ownerId: session.user.id,
             });
 
             if (error) {
+              toast.error("Something went wrong!");
               console.error(error);
             } else {
+              toast.success("Project created!");
               console.log(data);
             }
 
             setSubmitting(false);
-            setModalOpen(false);
+            setTimeout(() => {
+              setModalOpen(false);
+            }, 50);
           }}
         >
           {({ isSubmitting }) => (
