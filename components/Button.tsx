@@ -26,7 +26,7 @@ const Button = ({
       } px-3 py-1 text-lg font-medium text-gray-900 transition duration-200 hover:opacity-60 ${className}`}
       type={type}
     >
-      {loading ? <Spinner className="h-7 w-7 text-gray-900" /> : children}
+      {loading ? <Spinner className="h-7 w-7 text-gray-700" /> : children}
     </button>
   );
 };
