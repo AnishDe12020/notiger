@@ -1,4 +1,4 @@
-import { Field } from "formik";
+import { ErrorMessage, Field } from "formik";
 import { HTMLInputTypeAttribute, ReactNode } from "react";
 import cx from "classnames";
 
@@ -12,6 +12,7 @@ interface IFormikInputGroup {
   inputClassName?: string;
   placeholder?: string;
   label: string;
+  required?: boolean;
 }
 
 const FormikInputGroup = ({
@@ -24,11 +25,13 @@ const FormikInputGroup = ({
   inputClassName,
   placeholder,
   label,
+  required,
 }: IFormikInputGroup): JSX.Element => {
   return (
     <div className={cx("flex flex-col space-y-2", className)}>
       <label htmlFor={id} className={cx("text-gray-100", labelClassName)}>
         {label}
+        {required && <span className="ml-1 text-red-500">*</span>}
       </label>
       <Field
         as={as}
@@ -40,6 +43,13 @@ const FormikInputGroup = ({
           inputClassName
         )}
         placeholder={placeholder}
+        required={required}
+      />
+      <ErrorMessage
+        name={name}
+        render={msg => (
+          <div className="text-mt-2 rounded-lg bg-red-500 px-3 py-1">{msg}</div>
+        )}
       />
     </div>
   );

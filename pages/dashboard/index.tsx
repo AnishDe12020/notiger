@@ -3,8 +3,14 @@ import { NextPage } from "next";
 import { getSession, useSession } from "next-auth/react";
 import Button from "../../components/Button";
 import FormikInputGroup from "../../components/FormikInputGroup";
+import * as Yup from "yup";
 
 import Modal from "../../components/Modal";
+
+const CreateProjectValidationSchema = Yup.object().shape({
+  name: Yup.string().required("Name is a required field"),
+  description: Yup.string(),
+});
 
 const DashboardPage: NextPage = () => {
   const { data: session } = useSession();
@@ -18,6 +24,7 @@ const DashboardPage: NextPage = () => {
             name: "",
             description: "",
           }}
+          validationSchema={CreateProjectValidationSchema}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
               console.log(values);
@@ -33,6 +40,7 @@ const DashboardPage: NextPage = () => {
                 name="name"
                 placeholder="My Awesome Project"
                 label="Project Name"
+                required
               />
               <FormikInputGroup
                 as="textarea"
