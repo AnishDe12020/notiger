@@ -5,6 +5,7 @@ interface IButtonProps {
   children: ReactNode;
   danger?: boolean;
   onClick?: () => void;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button = ({
@@ -12,6 +13,7 @@ const Button = ({
   children,
   danger,
   onClick,
+  type,
 }: IButtonProps): JSX.Element => {
   return (
     <button
@@ -19,6 +21,7 @@ const Button = ({
       className={`flex items-center justify-center space-x-3 rounded-lg ${
         danger ? "bg-red-500" : "bg-gray-100"
       } px-3 py-1 text-lg font-medium text-gray-900 transition duration-200 hover:opacity-60 ${className}`}
+      type={type}
     >
       {children}
     </button>
