@@ -1,11 +1,19 @@
 import { NextPage } from "next";
 import { getSession, useSession } from "next-auth/react";
 
+import Modal from "../../components/Modal";
+
 const DashboardPage: NextPage = () => {
   const { data: session } = useSession();
   console.log(session);
 
-  return <div className="text-white">Dashboard :)</div>;
+  return (
+    <div className="text-white">
+      <Modal triggerText="Open Dialog" title="Title">
+        <p>Test</p>
+      </Modal>
+    </div>
+  );
 };
 
 export const getServerSideProps = async ctx => {
