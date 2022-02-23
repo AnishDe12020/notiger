@@ -1,6 +1,6 @@
 import { Formik, Form } from "formik";
 import { NextPage } from "next";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Button from "../../components/Button";
 import FormikInputGroup from "../../components/FormikInputGroup";
 import * as Yup from "yup";
@@ -24,11 +24,10 @@ const DashboardPage: NextPage = () => {
   console.log(session);
 
   const { data: projects, error } = useSWR(
-    // @ts-ignore
-    `${PROJECTS_URL}?ownerId=${session.token.user.id}`
+    session &&
+      // @ts-ignore
+      `${PROJECTS_URL}?ownerId=${session.token.user.id}`
   );
-
-  console.log(projects);
 
   if (error) {
     toast.error("Error fetching projects");
@@ -104,31 +103,55 @@ const DashboardPage: NextPage = () => {
         className="grid items-center justify-center gap-8 align-middle"
         style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}
       >
-        {projects &&
-          projects.map(project => (
-            <div
-              className="flex h-[200px] w-full flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 text-white md:p-6"
-              key={project.id}
-            >
-              <h3 className="text-normal text-lg">{project.name}</h3>
-              <p className="text-gray-300">
-                {project.description || "No Description"}
-              </p>
+        {projects ? (
+          projects.length > 0 ? (
+            projects.map(project => (
+              <div
+                className="flex h-[200px] w-full flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 text-white md:p-6"
+                key={project.id}
+              >
+                <h3 className="text-normal text-lg">{project.name}</h3>
+                <p className="text-gray-300">
+                  {project.description || "No Description"}
+                </p>
+              </div>
+            ))
+          ) : (
+            <h2 className="text-semibold text-center text-xl text-white md:text-2xl lg:text-3xl">
+              No projects yet!
+            </h2>
+          )
+        ) : (
+          <>
+            <div className="flex h-[200px] w-full flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 text-white md:p-6">
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
             </div>
-          ))}
+            <div className="flex h-[200px] w-full flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 text-white md:p-6">
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+            </div>
+            <div className="flex h-[200px] w-full flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 text-white md:p-6">
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+            </div>
+            <div className="flex h-[200px] w-full flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 text-white md:p-6">
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+            </div>
+            <div className="flex h-[200px] w-full flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 text-white md:p-6">
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+            </div>
+            <div className="flex h-[200px] w-full flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 text-white md:p-6">
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
-};
-
-export const getServerSideProps = async ctx => {
-  const session = await getSession(ctx);
-
-  return {
-    props: {
-      session,
-    },
-  };
 };
 
 export default DashboardPage;
