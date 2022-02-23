@@ -1,5 +1,6 @@
 import { forwardRef, ReactNode } from "react";
 import { Spinner } from "./Icons";
+import cx from "classnames";
 
 interface IButtonProps {
   className?: string;
@@ -18,11 +19,16 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>(
     return (
       <button
         onClick={onClick}
-        className={`flex items-center justify-center space-x-3 rounded-lg ${
-          danger ? "bg-red-500" : "bg-gray-100"
-        } px-3 py-1 text-lg font-medium text-gray-900 transition duration-200 hover:opacity-60 ${className}`}
+        className={cx(
+          "flex items-center justify-center space-x-3 rounded-lg px-3 py-1",
+          "text-lg font-medium text-gray-900 transition duration-200 hover:opacity-60",
+          className,
+          danger ? "bg-red-500" : "bg-gray-100",
+          loading && "cursor-not-allowed opacity-60"
+        )}
         type={type}
         ref={ref}
+        disabled={loading}
       >
         {loading ? <Spinner className="h-7 w-7 text-gray-700" /> : children}
       </button>
