@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import useSWR from "swr";
@@ -21,7 +21,10 @@ const CreateStreamValidationSchema = Yup.object().shape({
 const ProjectPage: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
-  const { data: project, error } = useSWR(`/api/projects/${router.query.id}`);
+  const { id: projectId } = router.query;
+  const { data: project, error } = useSWR(
+    projectId && `/api/projects/${router.query.id}`
+  );
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   if (error) {
@@ -32,8 +35,20 @@ const ProjectPage: NextPage = () => {
 
   return (
     <div className="mx-8 mt-16 md:mx-16 lg:mx-32 xl:mx-64">
-      <h1 className="text-bold mb-4 text-3xl text-white">{project?.name}</h1>
-      <p className="text-md ml-1 text-gray-300">{project?.description}</p>
+      <div className="mb-8 space-y-4">
+        {project ? (
+          <>
+            <h1 className="text-bold text-3xl text-white">{project?.name}</h1>
+            <p className="text-md ml-1 text-gray-300">{project?.description}</p>
+          </>
+        ) : (
+          <>
+            <div className="h-10 animate-pulse rounded-lg bg-gray-700"></div>
+            <div className="h-6 animate-pulse rounded-lg bg-gray-700"></div>
+          </>
+        )}
+      </div>
+
       <Modal
         isOpen={modalOpen}
         toggleOpen={setModalOpen}
@@ -93,19 +108,6 @@ const ProjectPage: NextPage = () => {
       </Modal>
     </div>
   );
-};
-
-export const getServerSideProps = async ctx => {
-  const { id } = ctx.query;
-
-  const session = await getSession(ctx);
-
-  return {
-    props: {
-      session,
-      id,
-    },
-  };
 };
 
 export default ProjectPage;
