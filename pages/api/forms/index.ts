@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       case "GET":
         try {
           const forms = await Form.find({});
-          res.status(200).json({ data: forms });
+          res.status(200).json(forms);
         } catch (error) {
           res.status(400).json({ error: error.message });
         }
@@ -47,7 +47,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             if (err) {
               res.status(500).json({ error: err.message });
             } else {
-              res.status(200).json({ data: form });
+              res.status(200).json(form);
             }
           });
         } catch (error) {

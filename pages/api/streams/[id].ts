@@ -19,7 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             error: "Stream not found",
           });
         }
-        res.status(200).json({ data: stream });
+        res.status(200).json(stream);
       } catch (err) {
         res.status(500).json({ error: err.message });
       }
@@ -40,7 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             error: "Stream not found",
           });
         }
-        res.status(200).json({ data: stream });
+        res.status(200).json(stream);
       } catch (err) {
         res.status(500).json({ error: err.message });
       }
@@ -54,7 +54,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             error: "Stream not found",
           });
         }
-        res.status(200).json({ data: stream });
+        res.status(200).json(stream);
       } catch (err) {
         res.status(500).json({ error: err.message });
       }

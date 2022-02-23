@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case "GET":
       try {
         const streams = await Stream.find({});
-        res.status(200).json({ data: streams });
+        res.status(200).json(streams);
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
@@ -31,7 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           if (err) {
             res.status(500).json({ error: err.message });
           } else {
-            res.status(200).json({ data: stream });
+            res.status(200).json(stream);
           }
         });
       } catch (error) {

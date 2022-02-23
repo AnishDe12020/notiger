@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (!form) {
           return res.status(404).json({ error: "Form not found" });
         }
-        res.status(200).json({ data: form });
+        res.status(200).json(form);
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (!form) {
           return res.status(404).json({ error: "Form not found" });
         }
-        res.status(200).json({ data: form });
+        res.status(200).json(form);
       } catch (error) {
         res.status(400).json({ error: error.message });
       }

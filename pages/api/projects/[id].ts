@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (!project) {
           return res.status(404).json({ error: "Project not found" });
         }
-        res.status(200).json({ data: project });
+        res.status(200).json(project);
       } catch (err) {
         res.status(500).json({ error: err.message });
       }
@@ -35,7 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (!project) {
           return res.status(404).json({ error: "Project not found" });
         }
-        res.status(200).json({ data: project });
+        res.status(200).json(project);
       } catch (err) {
         res.status(500).json({ error: err.message });
       }
@@ -46,7 +46,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (!project) {
           return res.status(404).json({ error: "Project not found" });
         }
-        res.status(200).json({ data: project });
+        res.status(200).json(project);
       } catch (err) {
         res.status(500).json({ error: err.message });
       }

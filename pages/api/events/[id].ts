@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (!event) {
           return res.status(404).json({ error: "Event not found" });
         }
-        res.status(200).json({ data: event });
+        res.status(200).json(event);
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (!event) {
           return res.status(404).json({ error: "Event not found" });
         }
-        res.status(200).json({ data: event });
+        res.status(200).json(event);
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
