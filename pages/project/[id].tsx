@@ -3,20 +3,13 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import useSWR from "swr";
-import { Formik, Form } from "formik";
-import Button from "../../components/Button";
-import * as Yup from "yup";
-import Modal from "../../components/Modal";
+
 import axios from "axios";
 import { useState } from "react";
-import FormikInputGroup from "../../components/FormikInputGroup";
+
+import { CreateStream } from "../../components/Project";
 
 const STREAMS_URL = "/api/streams";
-
-const CreateStreamValidationSchema = Yup.object().shape({
-  name: Yup.string().required("Name is a required field"),
-  description: Yup.string(),
-});
 
 const ProjectPage: NextPage = () => {
   const { data: session } = useSession();
@@ -26,6 +19,28 @@ const ProjectPage: NextPage = () => {
     projectId && `/api/projects/${router.query.id}`
   );
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  const handleCreateStreamSubmit = async (values, { setSubmitting }) => {
+    // @ts-ignore
+    const { data, error } = await axios.post(STREAMS_URL, {
+      name: values.name,
+      description: values.description,
+      projectId: project._id,
+    });
+
+    if (error) {
+      toast.error("Something went wrong!");
+      console.error(error);
+    } else {
+      toast.success("Stream created!");
+      console.log(data);
+    }
+
+    setSubmitting(false);
+    setTimeout(() => {
+      setModalOpen(false);
+    }, 50);
+  };
 
   if (error) {
     toast.error(error.message);
@@ -53,63 +68,11 @@ const ProjectPage: NextPage = () => {
         </div>
 
         <div>
-          <Modal
-            isOpen={modalOpen}
-            toggleOpen={setModalOpen}
-            triggerText="Create Stream"
-            title="Create Stream"
-          >
-            <Formik
-              initialValues={{
-                name: "",
-                description: "",
-              }}
-              validationSchema={CreateStreamValidationSchema}
-              onSubmit={async (values, { setSubmitting }) => {
-                // @ts-ignore
-                const { data, error } = await axios.post(STREAMS_URL, {
-                  name: values.name,
-                  description: values.description,
-                  projectId: project._id,
-                });
-
-                if (error) {
-                  toast.error("Something went wrong!");
-                  console.error(error);
-                } else {
-                  toast.success("Stream created!");
-                  console.log(data);
-                }
-
-                setSubmitting(false);
-                setTimeout(() => {
-                  setModalOpen(false);
-                }, 50);
-              }}
-            >
-              {({ isSubmitting }) => (
-                <Form className="space-y-4">
-                  <FormikInputGroup
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="My Awesome Stream"
-                    label="Stream Name"
-                    required
-                  />
-                  <FormikInputGroup
-                    as="textarea"
-                    id="description"
-                    name="description"
-                    label="Stream Description"
-                  />
-                  <Button loading={isSubmitting} type="submit" className="w-40">
-                    Create Stream
-                  </Button>
-                </Form>
-              )}
-            </Formik>
-          </Modal>
+          <CreateStream
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            handleSubmit={handleCreateStreamSubmit}
+          />
         </div>
       </div>
     </div>
