@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { SWRConfig } from "swr";
 import fetcher from "../utils/fetcher";
 import { Toaster } from "react-hot-toast";
+import NextNProgress from "nextjs-progressbar";
 
 function Application({
   Component,
@@ -12,6 +13,7 @@ function Application({
   return (
     <SWRConfig value={{ fetcher: fetcher }}>
       <SessionProvider session={session}>
+        <NextNProgress color="#d1d5db" options={{ showSpinner: false }} />
         <Toaster
           toastOptions={{
             style: { backgroundColor: "#333333", color: "#ffffff" },
