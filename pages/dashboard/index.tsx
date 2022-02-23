@@ -9,6 +9,9 @@ import Modal from "../../components/Modal";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import useSWR from "swr";
+
+const PROJECTS_URL = "/api/projects";
 
 const CreateProjectValidationSchema = Yup.object().shape({
   name: Yup.string().required("Name is a required field"),
@@ -19,10 +22,28 @@ const DashboardPage: NextPage = () => {
   const { data: session } = useSession();
   console.log(session);
 
+  const {
+    data: { data: projects },
+    error,
+  } = useSWR("/api/projects");
+
+  console.log(projects);
+
+  if (error) {
+    toast.error("Error fetching projects");
+  }
+
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   return (
     <div>
+      {projects?.length > 0 &&
+        projects.map(project => (
+          <div className="text-white" key={project.id}>
+            <h1>{project.name}</h1>
+            <p>{project.description}</p>
+          </div>
+        ))}
       <Modal
         isOpen={modalOpen}
         toggleOpen={setModalOpen}
@@ -37,7 +58,7 @@ const DashboardPage: NextPage = () => {
           validationSchema={CreateProjectValidationSchema}
           onSubmit={async (values, { setSubmitting }) => {
             // @ts-ignore
-            const { data, error } = await axios.post("/api/projects", {
+            const { data, error } = await axios.post(PROJECTS_URL, {
               name: values.name,
               description: values.description,
               // @ts-ignore
