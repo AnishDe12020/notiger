@@ -100,15 +100,6 @@ export const getServerSideProps = async ctx => {
 
   const session = await getSession(ctx);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/auth?redirectTo=%2Fproject%2F${id}`,
-        permanent: false,
-      },
-    };
-  }
-
   return {
     props: {
       session,

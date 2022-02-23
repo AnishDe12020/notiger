@@ -124,15 +124,6 @@ const DashboardPage: NextPage = () => {
 export const getServerSideProps = async ctx => {
   const session = await getSession(ctx);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth?redirectTo=%2Fdashboard",
-        permanent: false,
-      },
-    };
-  }
-
   return {
     props: {
       session,

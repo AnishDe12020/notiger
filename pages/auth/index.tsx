@@ -28,10 +28,10 @@ const AuthPage: NextPage = () => {
 export const getServerSideProps = async context => {
   const session = await getSession(context);
 
-  if (session && context.query.redirectTo) {
+  if (session && context.query.callbackUrl) {
     return {
       redirect: {
-        destination: context.query.redirectTo,
+        destination: context.query.callbackUrl,
         permanent: false,
       },
     };
