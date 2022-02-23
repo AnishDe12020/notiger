@@ -64,6 +64,7 @@ const DashboardPage: NextPage = () => {
                 toast.error("Something went wrong!");
                 console.error(error);
               } else {
+                // @ts-ignore
                 mutate(`${PROJECTS_URL}?ownerId=${session.token.user.id}`);
                 toast.success("Project created!");
                 console.log(data);
