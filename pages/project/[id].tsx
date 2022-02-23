@@ -8,6 +8,7 @@ import axios from "axios";
 import { useState } from "react";
 
 import { CreateStream } from "../../components/Project";
+import useSWR from "swr";
 
 const STREAMS_URL = "/api/streams";
 
@@ -15,9 +16,13 @@ const ProjectPage: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const { id: projectId } = router.query;
-  const { data: project, error } = useSWRImmutable(
+  const { data: project, error: projectError } = useSWRImmutable(
     projectId && `/api/projects/${router.query.id}`
   );
+  const { data: streams, error: streamsError } = useSWR(
+    projectId && `${STREAMS_URL}?projectId=${projectId}`
+  );
+
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const handleCreateStreamSubmit = async (values, { setSubmitting }) => {
@@ -42,10 +47,16 @@ const ProjectPage: NextPage = () => {
     }, 50);
   };
 
-  if (error) {
-    toast.error(error.message);
+  if (projectError) {
+    console.error(projectError);
+    toast.error("Something went wrong!");
   }
-  console.log(project);
+
+  if (streamsError) {
+    console.error(streamsError);
+    toast.error("Something went wrong!");
+  }
+  console.log(streams);
   console.log(session);
 
   return (
@@ -74,6 +85,38 @@ const ProjectPage: NextPage = () => {
             handleSubmit={handleCreateStreamSubmit}
           />
         </div>
+      </div>
+      <div className="flex flex-col">
+        {streams ? (
+          streams.length > 0 ? (
+            streams.map(stream => (
+              <div
+                key={stream._id}
+                className="mb-8 flex flex-col justify-between space-y-4"
+              >
+                <h3 className="text-normal text-lg text-white">
+                  {stream.name}
+                </h3>
+                <p className="text-gray-300">
+                  {stream.description || "No description"}
+                </p>
+              </div>
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center space-y-8">
+              <h2 className="text-normal text-semibold text-center text-xl text-white md:text-2xl lg:text-3xl">
+                No streams yet!
+              </h2>
+              <CreateStream
+                modalOpen={modalOpen}
+                setModalOpen={setModalOpen}
+                handleSubmit={handleCreateStreamSubmit}
+              />
+            </div>
+          )
+        ) : (
+          <h1 className="text-white">Loading...</h1>
+        )}
       </div>
     </div>
   );

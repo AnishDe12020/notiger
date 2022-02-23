@@ -11,7 +11,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (method) {
     case "GET":
       try {
-        const streams = await Stream.find({});
+        const projectId = req.query.projectId as string;
+        const streams = await Stream.find({ projectId: projectId });
         res.status(200).json(streams);
       } catch (error) {
         res.status(400).json({ error: error.message });
