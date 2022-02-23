@@ -14,16 +14,31 @@ const STREAMS_URL = "/api/streams";
 
 const ProjectPage: NextPage = () => {
   const { data: session } = useSession();
+
   const router = useRouter();
   const { id: projectId } = router.query;
+
   const { data: project, error: projectError } = useSWRImmutable(
     projectId && `/api/projects/${router.query.id}`
   );
+
   const { data: streams, error: streamsError } = useSWR(
     projectId && `${STREAMS_URL}?projectId=${projectId}`
   );
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  if (projectError) {
+    console.error(projectError);
+    toast.error("Something went wrong!");
+  }
+
+  if (streamsError) {
+    console.error(streamsError);
+    toast.error("Something went wrong!");
+  }
+  console.log(streams);
+  console.log(session);
 
   const handleCreateStreamSubmit = async (values, { setSubmitting }) => {
     // @ts-ignore
@@ -47,18 +62,6 @@ const ProjectPage: NextPage = () => {
     }, 50);
   };
 
-  if (projectError) {
-    console.error(projectError);
-    toast.error("Something went wrong!");
-  }
-
-  if (streamsError) {
-    console.error(streamsError);
-    toast.error("Something went wrong!");
-  }
-  console.log(streams);
-  console.log(session);
-
   return (
     <div className="mx-8 mt-16 md:mx-16 lg:mx-32 xl:mx-64">
       <div className="flex justify-between">
@@ -72,8 +75,8 @@ const ProjectPage: NextPage = () => {
             </>
           ) : (
             <>
-              <div className="h-10 animate-pulse rounded-lg bg-gray-700"></div>
-              <div className="h-6 animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-10 w-32 animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-6 w-28 animate-pulse rounded-lg bg-gray-700"></div>
             </>
           )}
         </div>
