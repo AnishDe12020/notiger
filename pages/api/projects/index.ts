@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case "GET":
       try {
         const projects = await Project.find({});
-        res.status(200).json({ data: projects });
+        res.status(200).json(projects);
       } catch (err) {
         res.status(400).json({ error: err.message });
       }
@@ -34,7 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             console.log(err);
             return res.status(400).json({ error: err.message });
           } else {
-            return res.status(200).json({ data: project });
+            return res.status(200).json(project);
           }
         });
       } catch (err) {

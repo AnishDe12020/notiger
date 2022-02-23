@@ -22,10 +22,7 @@ const DashboardPage: NextPage = () => {
   const { data: session } = useSession();
   console.log(session);
 
-  const {
-    data: { data: projects },
-    error,
-  } = useSWR("/api/projects");
+  const { data: projects, error } = useSWR("/api/projects");
 
   console.log(projects);
 
@@ -37,7 +34,7 @@ const DashboardPage: NextPage = () => {
 
   return (
     <div>
-      {projects?.length > 0 &&
+      {projects &&
         projects.map(project => (
           <div className="text-white" key={project.id}>
             <h1>{project.name}</h1>
