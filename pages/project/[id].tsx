@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
-import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 
 import axios from "axios";
 import { useState } from "react";
@@ -15,7 +15,7 @@ const ProjectPage: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const { id: projectId } = router.query;
-  const { data: project, error } = useSWR(
+  const { data: project, error } = useSWRImmutable(
     projectId && `/api/projects/${router.query.id}`
   );
   const [modalOpen, setModalOpen] = useState<boolean>(false);
