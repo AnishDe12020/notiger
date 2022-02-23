@@ -24,7 +24,7 @@ const DashboardPage: NextPage = () => {
 
   const { data: projects, error } = useSWR(
     // @ts-ignore
-    `/api/projects?ownerId=${session.user.id}`
+    `/api/projects?ownerId=${session.token.user.id}`
   );
 
   console.log(projects);
@@ -56,7 +56,7 @@ const DashboardPage: NextPage = () => {
                 name: values.name,
                 description: values.description,
                 // @ts-ignore
-                ownerId: session.user.id,
+                ownerId: session.token.user.id,
               });
 
               if (error) {

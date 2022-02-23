@@ -6,8 +6,6 @@ import Project from "../../../models/Project";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
-  console.log("req came ");
-
   await dbConnect();
 
   switch (method) {
