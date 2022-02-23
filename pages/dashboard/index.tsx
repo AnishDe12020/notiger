@@ -9,7 +9,7 @@ import Modal from "../../components/Modal";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 
 const PROJECTS_URL = "/api/projects";
 
@@ -20,11 +20,12 @@ const CreateProjectValidationSchema = Yup.object().shape({
 
 const DashboardPage: NextPage = () => {
   const { data: session } = useSession();
+  const { mutate } = useSWRConfig();
   console.log(session);
 
   const { data: projects, error } = useSWR(
     // @ts-ignore
-    `/api/projects?ownerId=${session.token.user.id}`
+    `${PROJECTS_URL}?ownerId=${session.token.user.id}`
   );
 
   console.log(projects);
@@ -63,6 +64,7 @@ const DashboardPage: NextPage = () => {
                 toast.error("Something went wrong!");
                 console.error(error);
               } else {
+                mutate(`${PROJECTS_URL}?ownerId=${session.token.user.id}`);
                 toast.success("Project created!");
                 console.log(data);
               }
