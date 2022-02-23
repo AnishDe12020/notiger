@@ -30,7 +30,11 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>(
         ref={ref}
         disabled={loading}
       >
-        {loading ? <Spinner className="h-7 w-7 text-gray-700" /> : children}
+        {loading ? (
+          <Spinner className="h-6 w-6 py-0.5 text-gray-700" />
+        ) : (
+          children
+        )}
       </button>
     );
   }
