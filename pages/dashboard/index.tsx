@@ -33,72 +33,84 @@ const DashboardPage: NextPage = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   return (
-    <div>
-      {projects &&
-        projects.map(project => (
-          <div className="text-white" key={project.id}>
-            <h1>{project.name}</h1>
-            <p>{project.description}</p>
-          </div>
-        ))}
-      <Modal
-        isOpen={modalOpen}
-        toggleOpen={setModalOpen}
-        triggerText="Create Project"
-        title="Create Project"
-      >
-        <Formik
-          initialValues={{
-            name: "",
-            description: "",
-          }}
-          validationSchema={CreateProjectValidationSchema}
-          onSubmit={async (values, { setSubmitting }) => {
-            // @ts-ignore
-            const { data, error } = await axios.post(PROJECTS_URL, {
-              name: values.name,
-              description: values.description,
-              // @ts-ignore
-              ownerId: session.user.id,
-            });
-
-            if (error) {
-              toast.error("Something went wrong!");
-              console.error(error);
-            } else {
-              toast.success("Project created!");
-              console.log(data);
-            }
-
-            setSubmitting(false);
-            setTimeout(() => {
-              setModalOpen(false);
-            }, 50);
-          }}
+    <div className="mx-8 mt-16 flex flex-col justify-center space-y-16 md:mx-32 lg:mx-64 xl:mx-96">
+      <div className="flex justify-end">
+        <Modal
+          isOpen={modalOpen}
+          toggleOpen={setModalOpen}
+          triggerText="Create Project"
+          title="Create Project"
         >
-          {({ isSubmitting }) => (
-            <Form className="space-y-4">
-              <FormikInputGroup
-                type="text"
-                id="name"
-                name="name"
-                placeholder="My Awesome Project"
-                label="Project Name"
-                required
-              />
-              <FormikInputGroup
-                as="textarea"
-                id="description"
-                name="description"
-                label="Project Description"
-              />
-              <Button loading={isSubmitting} type="submit" className="w-40">
-                Create Project
-              </Button>
-            </Form>
-          )}
-        </Formik>
-      </Modal>
+          <Formik
+            initialValues={{
+              name: "",
+              description: "",
+            }}
+            validationSchema={CreateProjectValidationSchema}
+            onSubmit={async (values, { setSubmitting }) => {
+              // @ts-ignore
+              const { data, error } = await axios.post(PROJECTS_URL, {
+                name: values.name,
+                description: values.description,
+                // @ts-ignore
+                ownerId: session.user.id,
+              });
+
+              if (error) {
+                toast.error("Something went wrong!");
+                console.error(error);
+              } else {
+                toast.success("Project created!");
+                console.log(data);
+              }
+
+              setSubmitting(false);
+              setTimeout(() => {
+                setModalOpen(false);
+              }, 50);
+            }}
+          >
+            {({ isSubmitting }) => (
+              <Form className="space-y-4">
+                <FormikInputGroup
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="My Awesome Project"
+                  label="Project Name"
+                  required
+                />
+                <FormikInputGroup
+                  as="textarea"
+                  id="description"
+                  name="description"
+                  label="Project Description"
+                />
+                <Button loading={isSubmitting} type="submit" className="w-40">
+                  Create Project
+                </Button>
+              </Form>
+            )}
+          </Formik>
+        </Modal>
+      </div>
+      <div
+        className="grid items-center justify-center gap-8 align-middle"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}
+      >
+        {projects &&
+          projects.map(project => (
+            <div
+              className="flex h-[200px] w-full flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 text-white md:p-6"
+              key={project.id}
+            >
+              <h3 className="text-normal text-lg">{project.name}</h3>
+              <p className="text-gray-300">
+                {project.description || "No Description"}
+              </p>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
