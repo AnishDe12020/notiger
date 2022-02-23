@@ -25,7 +25,7 @@ const Modal = ({
   return (
     <Dialog.Root onOpenChange={toggleOpen} open={isOpen}>
       <Dialog.Trigger asChild>
-        <Button className="w-fit">{triggerText}</Button>
+        <Button className="h-fit w-fit">{triggerText}</Button>
       </Dialog.Trigger>
       <Transition.Root show={isOpen}>
         <Transition.Child
