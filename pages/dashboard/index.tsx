@@ -6,6 +6,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import useSWR, { useSWRConfig } from "swr";
 import { CreateProject } from "../../components/Dashboard";
+import Link from "next/link";
 
 const PROJECTS_URL = "/api/projects";
 
@@ -67,15 +68,22 @@ const DashboardPage: NextPage = () => {
         {projects ? (
           projects.length > 0 ? (
             projects.map(project => (
-              <div
-                className="flex h-[200px] w-full flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 text-white md:p-6"
-                key={project.id}
+              <Link
+                href="/project/[id]"
+                as={`/project/${project._id}`}
+                key={project._id}
+                passHref
               >
-                <h3 className="text-normal text-lg">{project.name}</h3>
-                <p className="text-gray-300">
-                  {project.description || "No Description"}
-                </p>
-              </div>
+                <a
+                  className="flex h-[200px] w-full flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 text-white transition duration-200 hover:border-gray-400 md:p-6"
+                  key={project._id}
+                >
+                  <h3 className="text-normal text-lg">{project.name}</h3>
+                  <p className="text-gray-300">
+                    {project.description || "No Description"}
+                  </p>
+                </a>
+              </Link>
             ))
           ) : (
             <div className="flex flex-col items-center justify-center space-y-8">
