@@ -13,7 +13,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (method) {
     case "GET":
       try {
-        const projects = await Project.find({});
+        const ownerId = req.query.ownerId as string;
+        const projects = await Project.find({ ownerId: ownerId });
         res.status(200).json(projects);
       } catch (err) {
         res.status(400).json({ error: err.message });

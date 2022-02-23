@@ -22,7 +22,10 @@ const DashboardPage: NextPage = () => {
   const { data: session } = useSession();
   console.log(session);
 
-  const { data: projects, error } = useSWR("/api/projects");
+  const { data: projects, error } = useSWR(
+    // @ts-ignore
+    `/api/projects?ownerId=${session.user.id}`
+  );
 
   console.log(projects);
 
