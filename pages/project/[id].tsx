@@ -92,7 +92,7 @@ const ProjectPage: NextPage = () => {
             streams.map(stream => (
               <div
                 key={stream._id}
-                className="mb-8 flex flex-col justify-between space-y-4"
+                className="mb-8 flex flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 md:p-6"
               >
                 <h3 className="text-normal text-lg text-white">
                   {stream.name}
