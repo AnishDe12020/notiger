@@ -39,7 +39,7 @@ const Modal = ({
         >
           <Dialog.Overlay
             forceMount
-            className="fixed inset-0 z-20 bg-gray-900/60"
+            className="fixed inset-0 z-20 bg-secondary/60"
           />
         </Transition.Child>
         <Transition.Child
@@ -56,7 +56,7 @@ const Modal = ({
               "fixed z-40",
               "w-[95vw] max-w-md rounded-xl p-8 md:w-full",
               "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-              "bg-gray-900",
+              "bg-secondary",
               "focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-60"
             )}
           >

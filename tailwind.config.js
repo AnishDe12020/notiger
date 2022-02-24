@@ -4,7 +4,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        secondary: "#0f0f0f",
+      },
+    },
   },
   plugins: [require("@tailwindcss/forms")],
 };

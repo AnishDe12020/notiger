@@ -39,7 +39,7 @@ const FormikInputGroup = ({
         id={id}
         name={name}
         className={cx(
-          "rounded-lg border-2 bg-gray-900 text-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-60",
+          "rounded-lg border-2 bg-secondary text-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-60",
           inputClassName
         )}
         placeholder={placeholder}
