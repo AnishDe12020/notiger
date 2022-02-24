@@ -12,6 +12,7 @@ import { CreateStream } from "../../components/Project";
 import useSWR from "swr";
 import IStream from "../../types/Stream";
 import Events from "../../components/Events";
+import useBreakpointValue from "../../utils/useBreakpointValue";
 
 const STREAMS_URL = "/api/streams";
 
@@ -45,6 +46,8 @@ const ProjectPage: NextPage = () => {
   }
   console.log(streams);
   console.log(session);
+
+  console.log("Breakpoint: ", useBreakpointValue());
 
   const handleCreateStreamSubmit = async (values, { setSubmitting }) => {
     // @ts-ignore
