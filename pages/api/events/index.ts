@@ -31,7 +31,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     switch (method) {
       case "GET":
         try {
-          const events = await Event.find({ streamId: streamId });
+          const events = await Event.find({ streamId: streamId }).sort({
+            _id: -1,
+          });
           res.status(200).json(events);
         } catch (error) {
           res.status(400).json({ error: error.message });
