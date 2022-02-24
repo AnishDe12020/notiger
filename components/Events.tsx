@@ -26,7 +26,10 @@ const Events = ({ stream }: IEventsProps): JSX.Element => {
       </h2>
       {events &&
         events.map(event => (
-          <div key={event._id} className="space-y-8">
+          <div
+            key={event._id}
+            className="space-y-8 rounded-lg border-2 border-gray-700 p-4"
+          >
             <div className="flex space-x-8">
               {event?.icon && (
                 <div className="text-white">
