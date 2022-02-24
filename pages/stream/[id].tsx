@@ -7,7 +7,9 @@ import Events from "../../components/Events";
 const StreamPage: NextPage = () => {
   const router = useRouter();
   const { id: streamId } = router.query;
-  const { data: stream, error } = useSWR(`/api/streams/${streamId}`);
+  const { data: stream, error } = useSWR(
+    streamId && `/api/streams/${streamId}`
+  );
   if (error) {
     console.error(error);
     toast.error("Something went wrong!");
