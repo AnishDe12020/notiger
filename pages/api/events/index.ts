@@ -43,7 +43,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           const streamIdFormatted = new ObjectId(streamId as string);
           const body = req.body;
           if (typeof body === "object") {
-            console.log(sizeof(body));
             if (sizeof(body) <= 16384) {
               const event = new Event({
                 streamId: streamIdFormatted,
