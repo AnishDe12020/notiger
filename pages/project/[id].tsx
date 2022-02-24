@@ -47,7 +47,7 @@ const ProjectPage: NextPage = () => {
   console.log(streams);
   console.log(session);
 
-  console.log("Breakpoint: ", useBreakpointValue());
+  const breakpointValue = useBreakpointValue();
 
   const handleCreateStreamSubmit = async (values, { setSubmitting }) => {
     // @ts-ignore
@@ -75,7 +75,16 @@ const ProjectPage: NextPage = () => {
     if (stream === selectedStream) {
       setSelectedStream(undefined);
     } else {
-      setSelectedStream(stream);
+      if (
+        breakpointValue === "mobile" ||
+        breakpointValue === "sm" ||
+        breakpointValue === "xs" ||
+        breakpointValue === "md"
+      ) {
+        router.push(`/stream/${stream._id}`);
+      } else {
+        setSelectedStream(stream);
+      }
     }
   };
 
@@ -165,8 +174,9 @@ const ProjectPage: NextPage = () => {
       </div>
       <div
         className={cx(
-          "flex w-full flex-col items-center",
-          !selectedStream && "justify-center"
+          "w-full flex-col items-center",
+          !selectedStream && "justify-center",
+          "hidden lg:flex"
         )}
       >
         {selectedStream ? (

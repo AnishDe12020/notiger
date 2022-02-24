@@ -36,15 +36,15 @@ const Events = ({ stream }: IEventsProps): JSX.Element => {
               className="space-y-8 rounded-lg border-2 border-gray-700 p-4"
             >
               <div className="flex justify-between">
-                <div className="flex items-center space-x-6">
+                <div className="flex space-x-4 md:space-x-6">
                   <Twemoji
                     className="flex h-fit w-fit items-center justify-center rounded-full bg-gray-800 p-3"
-                    options={{ className: "h-6 w-6" }}
+                    options={{ className: "h-4 w-4 md:h-6 md:w-6" }}
                   >
                     {event?.icon || "🔔"}
                   </Twemoji>
 
-                  <div className="flex flex-col space-y-4">
+                  <div className="flex flex-col space-y-2 md:space-y-4">
                     <h3 className="text-lg text-gray-100">
                       {event?.name || "No name"}
                     </h3>
