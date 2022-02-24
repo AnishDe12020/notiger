@@ -1,7 +1,10 @@
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import IStream from "../types/Stream";
-import ReactJson from "react-json-view";
+import dynamic from "next/dynamic";
+import Twemoji from "react-twemoji";
+
+const ReactJson = dynamic(() => import("react-json-view"), { ssr: false });
 
 interface IEventsProps {
   stream: IStream;
@@ -30,11 +33,14 @@ const Events = ({ stream }: IEventsProps): JSX.Element => {
             key={event._id}
             className="space-y-8 rounded-lg border-2 border-gray-700 p-4"
           >
-            <div className="flex space-x-8">
+            <div className="flex items-center space-x-8">
               {event?.icon && (
-                <div className="text-white">
-                  <span>{event?.icon || "?"}</span>
-                </div>
+                <Twemoji
+                  className="flex h-fit w-fit items-center justify-center rounded-full bg-gray-800 p-3"
+                  options={{ className: "h-8 w-8" }}
+                >
+                  {event?.icon}
+                </Twemoji>
               )}
               <div className="flex flex-col space-y-4">
                 <h3 className="text-md text-gray-100">{event?.name}</h3>
