@@ -11,6 +11,7 @@ import { useState } from "react";
 import { CreateStream } from "../../components/Project";
 import useSWR from "swr";
 import IStream from "../../types/Stream";
+import Events from "../../components/Events";
 
 const STREAMS_URL = "/api/streams";
 
@@ -166,11 +167,7 @@ const ProjectPage: NextPage = () => {
         )}
       >
         {selectedStream ? (
-          <div className="flex flex-col text-white">
-            <h2 className="text-lg md:text-xl lg:text-2xl">
-              {selectedStream.name}
-            </h2>
-          </div>
+          <Events stream={selectedStream} />
         ) : (
           <h2 className="text-xl font-semibold text-white md:text-2xl lg:text-3xl">
             Select a stream to see events
