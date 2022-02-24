@@ -31,7 +31,7 @@ const Events = ({ streamId }: IEventsProps): JSX.Element => {
           events.map(event => (
             <div
               key={event._id}
-              className="space-y-8 rounded-lg border-2 border-gray-700 p-4"
+              className="space-y-8 rounded-lg border-2 border-gray-500 p-4"
             >
               <div className="flex justify-between">
                 <div className="flex space-x-4 md:space-x-6">
