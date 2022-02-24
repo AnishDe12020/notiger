@@ -3,6 +3,7 @@ import useSWR from "swr";
 import IStream from "../types/Stream";
 import dynamic from "next/dynamic";
 import Twemoji from "react-twemoji";
+import getCreatedAtFromMongoId from "../utils/getCreatedAtFromMongoId";
 
 const ReactJson = dynamic(() => import("react-json-view"), { ssr: false });
 
@@ -33,19 +34,24 @@ const Events = ({ stream }: IEventsProps): JSX.Element => {
             key={event._id}
             className="space-y-8 rounded-lg border-2 border-gray-700 p-4"
           >
-            <div className="flex items-center space-x-8">
-              {event?.icon && (
-                <Twemoji
-                  className="flex h-fit w-fit items-center justify-center rounded-full bg-gray-800 p-3"
-                  options={{ className: "h-8 w-8" }}
-                >
-                  {event?.icon}
-                </Twemoji>
-              )}
-              <div className="flex flex-col space-y-4">
-                <h3 className="text-md text-gray-100">{event?.name}</h3>
-                <p className="text-sm text-gray-300">{event?.description}</p>
+            <div className="flex justify-between">
+              <div className="flex items-center space-x-8">
+                {event?.icon && (
+                  <Twemoji
+                    className="flex h-fit w-fit items-center justify-center rounded-full bg-gray-800 p-3"
+                    options={{ className: "h-8 w-8" }}
+                  >
+                    {event?.icon}
+                  </Twemoji>
+                )}
+                <div className="flex flex-col space-y-4">
+                  <h3 className="text-md text-gray-100">{event?.name}</h3>
+                  <p className="text-sm text-gray-300">{event?.description}</p>
+                </div>
               </div>
+              <p className="text-sm text-gray-300">
+                {getCreatedAtFromMongoId(event._id)}
+              </p>
             </div>
 
             <ReactJson
