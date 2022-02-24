@@ -29,7 +29,7 @@ const EventsDrawer = ({
           leaveFrom="translate-x-0"
           leaveTo="translate-x-full"
         >
-          <Dialog.Content className="fixed right-0 top-0 z-50 my-4 w-full rounded-lg bg-secondary px-4 py-4 pt-16 md:right-4 md:w-[56rem] lg:right-8">
+          <Dialog.Content className="fixed right-0 top-0 z-50 h-screen w-full overflow-y-scroll bg-secondary px-4 py-16 shadow-2xl shadow-secondary md:w-[56rem]">
             <Events streamId={streamId as unknown as ObjectId} />
             <Dialog.Close
               className={cx(
