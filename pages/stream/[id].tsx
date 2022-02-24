@@ -1,21 +1,17 @@
+import { ObjectId } from "mongodb";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import toast from "react-hot-toast";
-import useSWR from "swr";
 import Events from "../../components/Events";
 
 const StreamPage: NextPage = () => {
   const router = useRouter();
   const { id: streamId } = router.query;
-  const { data: stream, error } = useSWR(
-    streamId && `/api/streams/${streamId}`
-  );
-  if (error) {
-    console.error(error);
-    toast.error("Something went wrong!");
-  }
 
-  return <div className="mx-8">{stream && <Events stream={stream} />}</div>;
+  return (
+    <div className="mx-8">
+      {streamId && <Events streamId={streamId as unknown as ObjectId} />}
+    </div>
+  );
 };
 
 export default StreamPage;

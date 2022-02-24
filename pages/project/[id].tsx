@@ -180,7 +180,7 @@ const ProjectPage: NextPage = () => {
         )}
       >
         {selectedStream ? (
-          <Events stream={selectedStream} />
+          <Events streamId={selectedStream._id} />
         ) : (
           <h2 className="text-xl font-semibold text-white md:text-2xl lg:text-3xl">
             Select a stream to see events

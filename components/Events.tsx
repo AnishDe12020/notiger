@@ -1,19 +1,20 @@
 import toast from "react-hot-toast";
 import useSWR from "swr";
-import IStream from "../types/Stream";
+
 import dynamic from "next/dynamic";
 import Twemoji from "react-twemoji";
 import getCreatedAtFromMongoId from "../utils/getCreatedAtFromMongoId";
+import { ObjectId } from "mongodb";
 
 const ReactJson = dynamic(() => import("react-json-view"), { ssr: false });
 
 interface IEventsProps {
-  stream: IStream;
+  streamId: ObjectId;
 }
 
-const Events = ({ stream }: IEventsProps): JSX.Element => {
+const Events = ({ streamId }: IEventsProps): JSX.Element => {
   const { data: events, error } = useSWR(
-    stream && `/api/events?streamId=${stream._id}`
+    streamId && `/api/events?streamId=${streamId}`
   );
 
   console.log(events);
@@ -25,9 +26,6 @@ const Events = ({ stream }: IEventsProps): JSX.Element => {
 
   return (
     <div className="flex w-full flex-col justify-center">
-      <h2 className="text-normal mb-16 text-lg text-white md:text-xl lg:text-2xl">
-        {stream.name}
-      </h2>
       <div className="flex flex-col space-y-8">
         {events &&
           events.map(event => (
