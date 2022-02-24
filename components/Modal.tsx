@@ -53,7 +53,7 @@ const Modal = ({
         >
           <Dialog.Content
             className={cx(
-              "fixed z-50",
+              "fixed z-40",
               "w-[95vw] max-w-md rounded-xl p-8 md:w-full",
               "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
               "bg-gray-900",

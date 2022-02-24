@@ -10,9 +10,8 @@ import { useState } from "react";
 
 import { CreateStream } from "../../components/Project";
 import useSWR from "swr";
-import IStream from "../../types/Stream";
-import Events from "../../components/Events";
-import useBreakpointValue from "../../utils/useBreakpointValue";
+
+import EventsDrawer from "../../components/Project/EventsDrawer";
 
 const STREAMS_URL = "/api/streams";
 
@@ -31,9 +30,6 @@ const ProjectPage: NextPage = () => {
   );
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [selectedStream, setSelectedStream] = useState<IStream>();
-
-  console.log(selectedStream);
 
   if (projectError) {
     console.error(projectError);
@@ -46,8 +42,6 @@ const ProjectPage: NextPage = () => {
   }
   console.log(streams);
   console.log(session);
-
-  const breakpointValue = useBreakpointValue();
 
   const handleCreateStreamSubmit = async (values, { setSubmitting }) => {
     // @ts-ignore
@@ -71,64 +65,44 @@ const ProjectPage: NextPage = () => {
     }, 50);
   };
 
-  const handleSelectStream = (stream: IStream) => {
-    if (stream === selectedStream) {
-      setSelectedStream(undefined);
-    } else {
-      if (
-        breakpointValue === "mobile" ||
-        breakpointValue === "sm" ||
-        breakpointValue === "xs" ||
-        breakpointValue === "md"
-      ) {
-        router.push(`/stream/${stream._id}`);
-      } else {
-        setSelectedStream(stream);
-      }
-    }
-  };
-
   return (
-    <div className={cx("mx-8 mt-16 flex space-x-16 md:mx-16")}>
-      <div>
-        <div className="flex justify-between">
-          <div className="mb-8 space-y-4">
-            {project ? (
-              <>
-                <h1 className="text-bold text-3xl text-white">
-                  {project?.name}
-                </h1>
-                <p className="text-md ml-1 text-gray-300">
-                  {project?.description}
-                </p>
-              </>
-            ) : (
-              <>
-                <div className="h-10 w-32 animate-pulse rounded-lg bg-gray-700"></div>
-                <div className="h-6 w-28 animate-pulse rounded-lg bg-gray-700"></div>
-              </>
-            )}
-          </div>
-
-          <div>
-            <CreateStream
-              modalOpen={modalOpen}
-              setModalOpen={setModalOpen}
-              handleSubmit={handleCreateStreamSubmit}
-            />
-          </div>
+    <div className={cx("mx-8 mt-16 md:mx-16")}>
+      <div className="flex justify-between">
+        <div className="mb-8 space-y-4">
+          {project ? (
+            <>
+              <h1 className="text-bold text-3xl text-white">{project?.name}</h1>
+              <p className="text-md ml-1 text-gray-300">
+                {project?.description}
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="h-10 w-32 animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-6 w-28 animate-pulse rounded-lg bg-gray-700"></div>
+            </>
+          )}
         </div>
-        <div className="flex flex-col">
-          {streams ? (
-            streams.length > 0 ? (
-              streams.map(stream => (
+
+        <div>
+          <CreateStream
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            handleSubmit={handleCreateStreamSubmit}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col">
+        {streams ? (
+          streams.length > 0 ? (
+            streams.map(stream => (
+              <EventsDrawer streamId={stream._id} key={stream._id}>
                 <button
                   key={stream._id}
                   className={cx(
-                    "mb-8 flex h-[150px] flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 transition duration-200 hover:border-gray-400 md:p-6",
-                    selectedStream === stream && "border-gray-300"
+                    "mb-8 flex h-[150px] flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 transition duration-200 hover:border-gray-400 md:p-6"
                   )}
-                  onClick={() => handleSelectStream(stream)}
                 >
                   <h3 className="text-normal text-lg text-white">
                     {stream.name}
@@ -137,54 +111,39 @@ const ProjectPage: NextPage = () => {
                     {stream.description || "No description"}
                   </p>
                 </button>
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center space-y-8">
-                <h2 className="text-normal text-semibold text-center text-xl text-white md:text-2xl lg:text-3xl">
-                  No streams yet!
-                </h2>
-                <CreateStream
-                  modalOpen={modalOpen}
-                  setModalOpen={setModalOpen}
-                  handleSubmit={handleCreateStreamSubmit}
-                />
-              </div>
-            )
+              </EventsDrawer>
+            ))
           ) : (
-            <>
-              <div className="mb-8 flex h-[150px] flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 md:p-6">
-                <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
-                <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
-              </div>
-              <div className="mb-8 flex h-[150px] flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 md:p-6">
-                <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
-                <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
-              </div>
-              <div className="mb-8 flex h-[150px] flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 md:p-6">
-                <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
-                <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
-              </div>
-              <div className="mb-8 flex h-[150px] flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 md:p-6">
-                <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
-                <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-      <div
-        className={cx(
-          "w-full flex-col items-center",
-          !selectedStream && "justify-center",
-          "hidden lg:flex"
-        )}
-      >
-        {selectedStream ? (
-          <Events streamId={selectedStream._id} />
+            <div className="flex flex-col items-center justify-center space-y-8">
+              <h2 className="text-normal text-semibold text-center text-xl text-white md:text-2xl lg:text-3xl">
+                No streams yet!
+              </h2>
+              <CreateStream
+                modalOpen={modalOpen}
+                setModalOpen={setModalOpen}
+                handleSubmit={handleCreateStreamSubmit}
+              />
+            </div>
+          )
         ) : (
-          <h2 className="text-xl font-semibold text-white md:text-2xl lg:text-3xl">
-            Select a stream to see events
-          </h2>
+          <>
+            <div className="mb-8 flex h-[150px] flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 md:p-6">
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+            </div>
+            <div className="mb-8 flex h-[150px] flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 md:p-6">
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+            </div>
+            <div className="mb-8 flex h-[150px] flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 md:p-6">
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+            </div>
+            <div className="mb-8 flex h-[150px] flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 md:p-6">
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700"></div>
+            </div>
+          </>
         )}
       </div>
     </div>
