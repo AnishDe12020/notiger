@@ -5,9 +5,6 @@ import toast from "react-hot-toast";
 import useSWRImmutable from "swr/immutable";
 import cx from "classnames";
 
-import axios from "axios";
-import { useState } from "react";
-
 import { CreateStream } from "../../components/Project";
 import useSWR from "swr";
 
@@ -29,8 +26,6 @@ const ProjectPage: NextPage = () => {
     projectId && `${STREAMS_URL}?projectId=${projectId}`
   );
 
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-
   if (projectError) {
     console.error(projectError);
     toast.error("Something went wrong!");
@@ -42,28 +37,6 @@ const ProjectPage: NextPage = () => {
   }
   console.log(streams);
   console.log(session);
-
-  const handleCreateStreamSubmit = async (values, { setSubmitting }) => {
-    // @ts-ignore
-    const { data, error } = await axios.post(STREAMS_URL, {
-      name: values.name,
-      description: values.description,
-      projectId: project._id,
-    });
-
-    if (error) {
-      toast.error("Something went wrong!");
-      console.error(error);
-    } else {
-      toast.success("Stream created!");
-      console.log(data);
-    }
-
-    setSubmitting(false);
-    setTimeout(() => {
-      setModalOpen(false);
-    }, 50);
-  };
 
   return (
     <div className={cx("mx-8 mt-16 md:mx-16")}>
@@ -85,11 +58,7 @@ const ProjectPage: NextPage = () => {
         </div>
 
         <div>
-          <CreateStream
-            modalOpen={modalOpen}
-            setModalOpen={setModalOpen}
-            handleSubmit={handleCreateStreamSubmit}
-          />
+          <CreateStream project={project} />
         </div>
       </div>
 
@@ -118,11 +87,7 @@ const ProjectPage: NextPage = () => {
               <h2 className="text-normal text-semibold text-center text-xl text-white md:text-2xl lg:text-3xl">
                 No streams yet!
               </h2>
-              <CreateStream
-                modalOpen={modalOpen}
-                setModalOpen={setModalOpen}
-                handleSubmit={handleCreateStreamSubmit}
-              />
+              <CreateStream project={project} />
             </div>
           )
         ) : (

@@ -1,36 +1,62 @@
-import { Formik, Form, FormikValues, FormikHelpers } from "formik";
+import { Formik, Form } from "formik";
 
 import Button from "../../components/Button";
 import FormikInputGroup from "../../components/FormikInputGroup";
 import * as Yup from "yup";
 
+import toast from "react-hot-toast";
 import Modal from "../../components/Modal";
-
-interface ICreateProjectProps {
-  handleSubmit: (
-    values: FormikValues,
-    options: FormikHelpers<FormikValues>
-  ) => void;
-  modalOpen: boolean;
-  setModalOpen: (modalOpen: boolean) => void;
-}
+import { useState } from "react";
+import { useSWRConfig } from "swr";
+import axios from "axios";
+import { Session } from "next-auth";
 
 const CreateProjectValidationSchema = Yup.object().shape({
   name: Yup.string().required("Name is a required field"),
   description: Yup.string(),
 });
 
-const CreateProject = ({
-  modalOpen,
-  setModalOpen,
-  handleSubmit,
-}: ICreateProjectProps): JSX.Element => {
+const PROJECTS_URL = "/api/projects";
+
+interface ICreateProjectProps {
+  session: Session;
+}
+
+const CreateProject = ({ session }: ICreateProjectProps): JSX.Element => {
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const { mutate } = useSWRConfig();
+
+  const handleCreateProjectSubmit = async (values, { setSubmitting }) => {
+    // @ts-ignore
+    const { data, error } = await axios.post(PROJECTS_URL, {
+      name: values.name,
+      description: values.description,
+      // @ts-ignore
+      ownerId: session.token.user.id,
+    });
+
+    if (error) {
+      toast.error("Something went wrong!");
+      console.error(error);
+    } else {
+      // @ts-ignore
+      mutate(`${PROJECTS_URL}?ownerId=${session.token.user.id}`);
+      toast.success("Project created!");
+      console.log(data);
+    }
+
+    setSubmitting(false);
+    setTimeout(() => {
+      setModalOpen(false);
+    }, 50);
+  };
+
   return (
     <Modal
-      isOpen={modalOpen}
-      toggleOpen={setModalOpen}
       triggerText="Create Project"
       title="Create Project"
+      isOpen={modalOpen}
+      toggleOpen={setModalOpen}
     >
       <Formik
         initialValues={{
@@ -38,7 +64,7 @@ const CreateProject = ({
           description: "",
         }}
         validationSchema={CreateProjectValidationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={handleCreateProjectSubmit}
       >
         {({ isSubmitting }) => (
           <Form className="space-y-4">

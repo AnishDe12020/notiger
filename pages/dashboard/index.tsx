@@ -1,10 +1,8 @@
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 
-import axios from "axios";
-import { useState } from "react";
 import toast from "react-hot-toast";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 import { CreateProject } from "../../components/Dashboard";
 import Link from "next/link";
 
@@ -12,7 +10,6 @@ const PROJECTS_URL = "/api/projects";
 
 const DashboardPage: NextPage = () => {
   const { data: session } = useSession();
-  const { mutate } = useSWRConfig();
   console.log(session);
 
   const { data: projects, error } = useSWR(
@@ -25,41 +22,10 @@ const DashboardPage: NextPage = () => {
     toast.error("Error fetching projects");
   }
 
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-
-  const handleCreateProjectSubmit = async (values, { setSubmitting }) => {
-    // @ts-ignore
-    const { data, error } = await axios.post(PROJECTS_URL, {
-      name: values.name,
-      description: values.description,
-      // @ts-ignore
-      ownerId: session.token.user.id,
-    });
-
-    if (error) {
-      toast.error("Something went wrong!");
-      console.error(error);
-    } else {
-      // @ts-ignore
-      mutate(`${PROJECTS_URL}?ownerId=${session.token.user.id}`);
-      toast.success("Project created!");
-      console.log(data);
-    }
-
-    setSubmitting(false);
-    setTimeout(() => {
-      setModalOpen(false);
-    }, 50);
-  };
-
   return (
     <div className="mx-8 mt-16 flex flex-col justify-center space-y-16 md:mx-32 lg:mx-64 xl:mx-96">
       <div className="flex justify-end">
-        <CreateProject
-          modalOpen={modalOpen}
-          setModalOpen={setModalOpen}
-          handleSubmit={handleCreateProjectSubmit}
-        />
+        <CreateProject session={session} />
       </div>
       <div
         className="grid items-center justify-center gap-8 align-middle"
@@ -90,11 +56,7 @@ const DashboardPage: NextPage = () => {
               <h2 className="text-semibold text-center text-xl text-white md:text-2xl lg:text-3xl">
                 No projects yet!
               </h2>
-              <CreateProject
-                modalOpen={modalOpen}
-                setModalOpen={setModalOpen}
-                handleSubmit={handleCreateProjectSubmit}
-              />
+              <CreateProject session={session} />
             </div>
           )
         ) : (
