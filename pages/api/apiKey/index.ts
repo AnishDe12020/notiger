@@ -3,6 +3,7 @@ import { ObjectId } from "mongodb";
 import dbConnect from "../../../lib/dbConnect";
 import { getToken } from "next-auth/jwt";
 import ApiKey from "../../../models/ApiKey";
+import crypto from "crypto";
 
 const secret = process.env.SECRET;
 
@@ -17,8 +18,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     switch (method) {
       case "GET":
         try {
-          const ownerId = req.query.ownerId as string;
-          const apiKeys = await ApiKey.find({ ownerId: ownerId });
+          // @ts-ignore
+          const ownerId = (req.query.ownerId as string) || token.user.id;
+          const apiKeys = await ApiKey.find({ ownerId: new ObjectId(ownerId) });
           res.status(200).json(apiKeys);
         } catch (err) {
           res.status(500).json({ error: err.message });
@@ -39,9 +41,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             }
           };
 
+          const apiKey = await generateApiKey();
+
           const apiKeyObject = new ApiKey({
             ownerId,
-            key: generateApiKey(),
+            key: apiKey,
           });
 
           apiKeyObject.save((err, apiKeyObject) => {
