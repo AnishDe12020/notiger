@@ -2,7 +2,8 @@ import { useState } from "react";
 import IApiKey from "../types/ApiKey";
 import cx from "classnames";
 import Button from "./Button";
-import { HiEye, HiClipboardCopy } from "react-icons/hi";
+import { HiEye, HiEyeOff } from "react-icons/hi";
+import { IoCopy } from "react-icons/io5";
 
 interface IApiKeyProps {
   apiKey: IApiKey;
@@ -23,12 +24,13 @@ const ApiKey = ({ apiKey }: IApiKeyProps): JSX.Element => {
       </h3>
       <div className="flex space-x-1">
         <Button className="bg-transparent !text-gray-300">
-          <HiClipboardCopy
-            onClick={() => navigator.clipboard.writeText(apiKey.key)}
-          />
+          <IoCopy onClick={() => navigator.clipboard.writeText(apiKey.key)} />
         </Button>
-        <Button className="bg-transparent !text-gray-300">
-          <HiEye onClick={() => setHidden(!hidden)} />
+        <Button
+          onClick={() => setHidden(!hidden)}
+          className="bg-transparent !text-gray-300"
+        >
+          {hidden ? <HiEyeOff /> : <HiEye />}
         </Button>
       </div>
     </div>
