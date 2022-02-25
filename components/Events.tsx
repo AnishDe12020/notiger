@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import Twemoji from "react-twemoji";
 import getCreatedAtFromMongoId from "../utils/getCreatedAtFromMongoId";
 import { ObjectId } from "mongodb";
+import axios from "axios";
+import Button from "./Button";
 
 const ReactJson = dynamic(() => import("react-json-view"), { ssr: false });
 
@@ -13,11 +15,9 @@ interface IEventsProps {
 }
 
 const Events = ({ streamId }: IEventsProps): JSX.Element => {
-  let { data: events, error } = useSWR(
+  const { data: events, error } = useSWR(
     streamId && `/api/events?streamId=${streamId}`
   );
-
-  events = [];
 
   console.log(events);
 
@@ -25,6 +25,17 @@ const Events = ({ streamId }: IEventsProps): JSX.Element => {
     console.error(error);
     toast.error("Something went wrong!");
   }
+
+  const createTestEvent = () => {
+    axios.post(`/api/events?streamId=${streamId}`, {
+      name: "Test Event",
+      description: "This is a test event.",
+      icon: "🎉",
+      payload: {
+        key: "some custom payload",
+      },
+    });
+  };
 
   return (
     <div className="flex w-full flex-col justify-center">
@@ -85,9 +96,14 @@ const Events = ({ streamId }: IEventsProps): JSX.Element => {
               </div>
             ))
           ) : (
-            <h2 className="text-semibold text-center text-lg text-white md:text-xl lg:text-2xl">
-              No events yet
-            </h2>
+            <>
+              <h2 className="text-semibold text-center text-lg text-white md:text-xl lg:text-2xl">
+                No events yet
+              </h2>
+              <Button className="w-fit self-center" onClick={createTestEvent}>
+                Create a test event
+              </Button>
+            </>
           )
         ) : (
           <>
