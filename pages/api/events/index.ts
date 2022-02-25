@@ -5,6 +5,9 @@ import Event from "../../../models/Event";
 import Stream from "../../../models/Stream";
 import sizeof from "object-sizeof";
 import ApiKey from "../../../models/ApiKey";
+import { getToken } from "next-auth/jwt";
+
+const secret = process.env.SECRET;
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -31,13 +34,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     switch (method) {
       case "GET":
-        try {
-          const events = await Event.find({ streamId: streamId }).sort({
-            _id: -1,
-          });
-          res.status(200).json(events);
-        } catch (error) {
-          res.status(400).json({ error: error.message });
+        {
+          const token = getToken({ req, secret });
+          if (token) {
+            try {
+              const events = await Event.find({ streamId: streamId }).sort({
+                _id: -1,
+              });
+              res.status(200).json(events);
+            } catch (error) {
+              res.status(400).json({ error: error.message });
+            }
+          } else {
+            res.status(401).json({ error: "Unauthorized" });
+          }
         }
         break;
 
