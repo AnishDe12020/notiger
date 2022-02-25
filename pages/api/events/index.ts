@@ -4,6 +4,7 @@ import dbConnect from "../../../lib/dbConnect";
 import Event from "../../../models/Event";
 import Stream from "../../../models/Stream";
 import sizeof from "object-sizeof";
+import ApiKey from "../../../models/ApiKey";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -42,27 +43,39 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       case "POST":
         try {
-          const streamIdFormatted = new ObjectId(streamId as string);
-          const body = req.body;
-          if (typeof body === "object") {
-            if (sizeof(body) <= 16384) {
-              const event = new Event({
-                streamId: streamIdFormatted,
-                ...body,
-              });
-
-              event.save((err, event) => {
-                if (err) {
-                  res.status(500).json({ error: err.message });
-                } else {
-                  res.status(200).json(event);
-                }
-              });
-            } else {
-              throw new Error("Body too large. Keep it under 16384 bytes");
-            }
+          const apiKey = req.headers["x-api-key"] || req.query.apiKey;
+          if (!apiKey) {
+            return res.status(400).json({
+              error: "Missing API key",
+            });
+          } else if (!(await ApiKey.exists({ key: apiKey }))) {
+            return res.status(400).json({
+              error: "Invalid API key",
+            });
           } else {
-            throw Error("Body must be an object (json)");
+            console.log(await ApiKey.exists({ key: apiKey }));
+            const streamIdFormatted = new ObjectId(streamId as string);
+            const body = req.body;
+            if (typeof body === "object") {
+              if (sizeof(body) <= 16384) {
+                const event = new Event({
+                  streamId: streamIdFormatted,
+                  ...body,
+                });
+
+                event.save((err, event) => {
+                  if (err) {
+                    res.status(500).json({ error: err.message });
+                  } else {
+                    res.status(200).json(event);
+                  }
+                });
+              } else {
+                throw new Error("Body too large. Keep it under 16384 bytes");
+              }
+            } else {
+              throw Error("Body must be an object (json)");
+            }
           }
         } catch (error) {
           res.status(400).json({ error: error.message });
