@@ -1,9 +1,13 @@
 import axios from "axios";
 import { getToken } from "firebase/messaging";
 import localforage from "localforage";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { messaging } from "../lib/firebase";
 
 const useNotifications = () => {
+  const [isSetup, setIsSetup] = useState<boolean>();
+
   const getTokenInLocalForage = async () => {
     return localforage.getItem("fcmToken");
   };
@@ -50,6 +54,10 @@ const useNotifications = () => {
     }
 
     await getFCMToken();
+
+    toast.success("Notifications enabled!");
+
+    setIsSetup(true);
   };
 
   const isSupported = () => {
@@ -60,9 +68,29 @@ const useNotifications = () => {
     return Notification.permission === "granted";
   };
 
-  const isSetup = () => {
-    return !!localforage.getItem("fcmToken");
-  };
+  useEffect(() => {
+    const checkIsSetup = async () => {
+      console.log(
+        "Token in local forage: ",
+        await localforage.getItem("fcmToken")
+      );
+
+      if (
+        (await localforage.getItem("fcmToken")) &&
+        isSupported() &&
+        isPermissionGranted() &&
+        (await navigator.serviceWorker.getRegistration(
+          "firebase-messaging-sw.js"
+        ))
+      ) {
+        setIsSetup(true);
+      } else {
+        setIsSetup(false);
+      }
+    };
+
+    checkIsSetup();
+  });
 
   return {
     setUpNotifications,
