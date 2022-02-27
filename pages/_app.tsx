@@ -3,11 +3,13 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { SWRConfig } from "swr";
 import fetcher from "../utils/fetcher";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import NextNProgress from "nextjs-progressbar";
 import { useEffect } from "react";
-import getFCMToken from "../lib/firebase";
+import getFCMToken, { onMessageListener } from "../lib/firebase";
 import Header from "../components/Header";
+import { Transition } from "@headlessui/react";
+import Twemoji from "react-twemoji";
 
 function Application({
   Component,
@@ -19,6 +21,42 @@ function Application({
         const token = await getFCMToken();
         if (token) {
           console.log(token);
+          onMessageListener()
+            .then(payload => {
+              toast.custom(t => (
+                <Transition
+                  show={t.visible}
+                  className="flex space-x-2 rounded-2xl bg-secondary px-4 py-3 transition duration-200"
+                  enter="transition duration-1000"
+                  enterFrom="-translate-y-full"
+                  enterTo="translate-y-0"
+                  leave="transition duration-200"
+                  leaveFrom="translate-y-0"
+                  leaveTo="-translate-y-full"
+                >
+                  <Twemoji
+                    className="flex h-fit w-fit items-center justify-center rounded-full bg-gray-800 p-3"
+                    options={{ className: "h-4 w-4 md:h-6 md:w-6" }}
+                  >
+                    {/* @ts-ignore */}
+                    {payload?.data.icon || "🔔"}
+                  </Twemoji>
+                  <div className="flex flex-col text-gray-100">
+                    <h3 className="text-md text-normal">
+                      {/* @ts-ignore */}
+                      {payload?.data.name || "New Event"}
+                    </h3>
+                    <p className="text-sm text-gray-300">
+                      {/* @ts-ignore */}
+                      {payload?.data.description}
+                    </p>
+                  </div>
+                </Transition>
+              ));
+
+              console.log(payload);
+            })
+            .catch(err => console.error(err));
         }
       } catch (err) {
         console.error(err);
@@ -51,12 +89,6 @@ function Application({
       );
     }
   }, []);
-
-  // onMessageListener()
-  //   .then(payload => {
-  //     console.log(payload);
-  //   })
-  //   .catch(err => console.error(err));
 
   return (
     <SWRConfig value={{ fetcher: fetcher }}>
