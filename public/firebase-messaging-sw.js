@@ -24,7 +24,7 @@ console.log("From service worker")
 messaging.onBackgroundMessage((payload) => {
   console.log("Notification payload: ", payload);
 
-  return self.registration.showNotification(payload.notification.name || "New Event", {
-    body: payload.notification.description || "",
+  return self.registration.showNotification(payload.data.name || "New Event", {
+    body: payload.data.description || "",
   });
 })
