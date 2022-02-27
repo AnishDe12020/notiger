@@ -33,6 +33,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             name: req.body.name,
             description: req.body?.description,
             projectId: projectId,
+            // @ts-ignore
+            ownerId: token.user.id,
           });
 
           stream.save((err, stream) => {

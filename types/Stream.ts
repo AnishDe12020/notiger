@@ -7,6 +7,7 @@ interface IStream {
   description: string;
   updatedAt: Date;
   projectId: Types.ObjectId;
+  ownerId: Types.ObjectId;
 }
 
 export default IStream;

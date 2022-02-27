@@ -17,6 +17,11 @@ const StreamSchema = new mongoose.Schema<IStream>({
   projectId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Project",
+    required: true,
+  },
+  ownerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
   },
 });
 

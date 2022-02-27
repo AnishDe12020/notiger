@@ -23,6 +23,7 @@
     "classnames": "^2.3.1",
     "date-fns": "^2.28.0",
     "firebase": "^9.6.7",
+    "firebase-admin": "^10.0.2",
     "formik": "^2.2.9",
     "localforage": "^1.10.0",
     "mongodb": "^4.3.1",

@@ -6,6 +6,8 @@ import Stream from "../../../models/Stream";
 import sizeof from "object-sizeof";
 import ApiKey from "../../../models/ApiKey";
 import { getToken } from "next-auth/jwt";
+import FCMToken from "../../../models/FCMToken";
+import { messaging } from "../../../lib/firebase-admin";
 
 const secret = process.env.SECRET;
 
@@ -80,6 +82,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     res.status(200).json(event);
                   }
                 });
+
+                const stream = await Stream.findOne({
+                  _id: streamIdFormatted,
+                });
+
+                console.log(stream);
+
+                const registrationTokens = await FCMToken.find({
+                  ownerId: stream.ownerId,
+                });
+
+                console.log(registrationTokens);
+
+                messaging
+                  .sendMulticast({
+                    data: body,
+                    tokens: registrationTokens.map(token => token.token),
+                  })
+                  .then(res => console.log(res));
               } else {
                 throw new Error("Body too large. Keep it under 16384 bytes");
               }
