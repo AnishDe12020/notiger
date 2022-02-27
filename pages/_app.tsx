@@ -7,7 +7,6 @@ import toast, { Toaster } from "react-hot-toast";
 import NextNProgress from "nextjs-progressbar";
 import { useEffect } from "react";
 import Header from "../components/Header";
-import localforage from "localforage";
 import EventToast from "../components/EventToast";
 import { onMessage } from "firebase/messaging";
 import { messaging } from "../lib/firebase";
@@ -17,17 +16,9 @@ function Application({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   useEffect(() => {
-    const setToken = () => {
-      const token = localforage.getItem("fcm_token");
-      if (token) {
-        console.log(token);
-      }
-    };
-
     onMessage(messaging, payload => {
       toast.custom(t => <EventToast t={t} payload={payload} />);
     });
-    setToken();
   }, []);
 
   return (
