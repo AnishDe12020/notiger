@@ -6,26 +6,13 @@ import fetcher from "../utils/fetcher";
 import { Toaster } from "react-hot-toast";
 import NextNProgress from "nextjs-progressbar";
 import { useEffect } from "react";
-import getFCMToken from "../lib/firebase";
+import Header from "../components/Header";
 
 function Application({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
   useEffect(() => {
-    const setToken = async () => {
-      try {
-        const token = await getFCMToken();
-        if (token) {
-          console.log(token);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    setToken();
-
     if ("serviceWorker" in navigator) {
       // Convert environment variables to URL `search` parameters
       const firebaseConfig = new URLSearchParams({
@@ -54,6 +41,7 @@ function Application({
   return (
     <SWRConfig value={{ fetcher: fetcher }}>
       <SessionProvider session={session}>
+        <Header />
         <NextNProgress color="#d1d5db" options={{ showSpinner: false }} />
         <Toaster
           toastOptions={{

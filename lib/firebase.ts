@@ -1,3 +1,4 @@
+import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 import localforage from "localforage";
@@ -20,12 +21,11 @@ export const getTokenInLocalForage = async () => {
 
 const getFCMToken = async () => {
   try {
+    const status = await Notification.requestPermission();
     const tokenInLocalForage = await getTokenInLocalForage();
     if (tokenInLocalForage) {
       return tokenInLocalForage;
     }
-
-    const status = await Notification.requestPermission();
 
     if (status && status === "granted") {
       const fcmToken = await getToken(messaging, {
@@ -33,6 +33,10 @@ const getFCMToken = async () => {
       });
 
       if (fcmToken) {
+        await axios.post("/api/fcmtokens", {
+          fcmToken: fcmToken,
+        });
+
         localforage.setItem("fcmToken", fcmToken);
         return fcmToken;
       }

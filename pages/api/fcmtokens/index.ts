@@ -2,8 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ObjectId } from "mongodb";
 import dbConnect from "../../../lib/dbConnect";
 import { getToken } from "next-auth/jwt";
-import ApiKey from "../../../models/ApiKey";
-import crypto from "crypto";
+import FCMToken from "../../../models/FCMToken";
 
 const secret = process.env.SECRET;
 
@@ -20,40 +19,34 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         try {
           // @ts-ignore
           const ownerId = (req.query.ownerId as string) || token.user.id;
-          const apiKeys = await ApiKey.find({ ownerId: new ObjectId(ownerId) });
-          res.status(200).json(apiKeys);
+
+          const fcmTokens = await FCMToken.find({
+            ownerId: new ObjectId(ownerId),
+          });
+
+          res.status(200).json(fcmTokens);
         } catch (err) {
           res.status(500).json({ error: err.message });
         }
         break;
+
       case "POST":
         try {
           // @ts-ignore
           const ownerId = new ObjectId(token.user.id);
+          const { fcmToken } = req.body;
 
-          const generateApiKey = async () => {
-            const randomUUID = crypto.randomUUID();
-            const apiKeyExists = await ApiKey.exists({ key: randomUUID });
-            if (apiKeyExists) {
-              generateApiKey();
-            } else {
-              return randomUUID;
-            }
-          };
-
-          const apiKey = await generateApiKey();
-
-          const apiKeyObject = new ApiKey({
+          const fcmTokenDoc = new FCMToken({
             ownerId,
-            key: apiKey,
+            token: fcmToken,
           });
 
-          apiKeyObject.save((err, apiKeyObject) => {
+          fcmTokenDoc.save((err, fcmToken) => {
             if (err) {
-              console.log(err);
+              console.error(err);
               return res.status(500).json({ error: err.message });
             } else {
-              return res.status(200).json(apiKeyObject);
+              return res.status(200).json(fcmToken);
             }
           });
         } catch (err) {
