@@ -6,10 +6,11 @@ import fetcher from "../utils/fetcher";
 import toast, { Toaster } from "react-hot-toast";
 import NextNProgress from "nextjs-progressbar";
 import { useEffect } from "react";
-import { onMessageListener } from "../lib/firebase";
 import Header from "../components/Header";
 import localforage from "localforage";
 import EventToast from "../components/EventToast";
+import { onMessage } from "firebase/messaging";
+import { messaging } from "../lib/firebase";
 
 function Application({
   Component,
@@ -20,16 +21,12 @@ function Application({
       const token = localforage.getItem("fcm_token");
       if (token) {
         console.log(token);
-        onMessageListener()
-          .then(payload => {
-            toast.custom(t => <EventToast t={t} />);
-
-            console.log(payload);
-          })
-          .catch(err => console.error(err));
       }
     };
 
+    onMessage(messaging, payload => {
+      toast.custom(t => <EventToast t={t} payload={payload} />);
+    });
     setToken();
   }, []);
 

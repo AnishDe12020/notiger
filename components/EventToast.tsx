@@ -4,9 +4,10 @@ import Twemoji from "react-twemoji";
 
 interface IToastProps {
   t: Toast;
+  payload: any;
 }
 
-const EventToast = ({ t }: IToastProps): JSX.Element => {
+const EventToast = ({ t, payload }: IToastProps): JSX.Element => {
   return (
     <Transition
       show={t.visible}
@@ -22,18 +23,13 @@ const EventToast = ({ t }: IToastProps): JSX.Element => {
         className="flex h-fit w-fit items-center justify-center rounded-full bg-gray-800 p-3"
         options={{ className: "h-4 w-4 md:h-6 md:w-6" }}
       >
-        {/* @ts-ignore */}
         {payload?.data.icon || "🔔"}
       </Twemoji>
       <div className="flex flex-col text-gray-100">
         <h3 className="text-md text-normal">
-          {/* @ts-ignore */}
           {payload?.data.name || "New Event"}
         </h3>
-        <p className="text-sm text-gray-300">
-          {/* @ts-ignore */}
-          {payload?.data.description}
-        </p>
+        <p className="text-sm text-gray-300">{payload?.data.description}</p>
       </div>
     </Transition>
   );
