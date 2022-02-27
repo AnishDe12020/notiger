@@ -1,6 +1,6 @@
 import axios from "axios";
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import localforage from "localforage";
 
 const firebaseConfig = {
@@ -13,7 +13,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
+export const messaging = getMessaging(app);
 
 export const getTokenInLocalForage = async () => {
   return localforage.getItem("fcmToken");
@@ -45,5 +45,12 @@ const getFCMToken = async () => {
     console.error(err);
   }
 };
+
+export const onMessageListener = () =>
+  new Promise(resolve => {
+    onMessage(messaging, payload => {
+      resolve(payload);
+    });
+  });
 
 export default getFCMToken;

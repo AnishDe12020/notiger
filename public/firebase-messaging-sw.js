@@ -19,6 +19,8 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging(app);
 
+console.log("From service worker")
+
 messaging.onBackgroundMessage((payload) => {
   console.log("Notification payload: ", payload);
 
