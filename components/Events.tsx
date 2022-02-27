@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 
 import dynamic from "next/dynamic";
 import Twemoji from "react-twemoji";
@@ -19,6 +19,8 @@ const Events = ({ streamId }: IEventsProps): JSX.Element => {
     streamId && `/api/events?streamId=${streamId}`
   );
 
+  const { mutate } = useSWRConfig();
+
   console.log(events);
 
   if (error) {
@@ -26,19 +28,34 @@ const Events = ({ streamId }: IEventsProps): JSX.Element => {
     toast.error("Something went wrong!");
   }
 
-  const createTestEvent = () => {
-    axios.post(`/api/events?streamId=${streamId}`, {
-      name: "Test Event",
-      description: "This is a test event.",
-      icon: "🎉",
-      payload: {
-        key: "some custom payload",
-      },
-    });
+  const createTestEvent = async () => {
+    const res = await axios.post("/api/apiKey");
+
+    console.log(res);
+
+    await axios.post(
+      `/api/events?streamId=${streamId}&apiKey=${res.data.key}`,
+      {
+        name: "Test Event",
+        description: "This is a test event.",
+        icon: "🎉",
+        payload: {
+          key: "some custom payload",
+        },
+      }
+    );
+
+    await axios.delete(`/api/apiKey/${res.data._id}`);
+
+    mutate(`/api/events?streamId=${streamId}`);
   };
 
   return (
     <div className="flex w-full flex-col justify-center">
+      <Button className="mb-8 w-fit" onClick={createTestEvent}>
+        Create a test event
+      </Button>
+
       <div className="flex flex-col space-y-8">
         {events ? (
           events.length > 0 ? (
