@@ -38,12 +38,10 @@ const ApiKeyPage: NextPage = () => {
             )
           ) : (
             <>
-              <div className="h-12 w-96 animate-pulse rounded-lg bg-gray-700" />
-              <div className="h-12 w-96 animate-pulse rounded-lg bg-gray-700" />
-
-              <div className="h-12 w-96 animate-pulse rounded-lg bg-gray-700" />
-
-              <div className="h-12 w-96 animate-pulse rounded-lg bg-gray-700" />
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700 md:w-64 lg:w-96" />
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700 md:w-64 lg:w-96" />{" "}
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700 md:w-64 lg:w-96" />{" "}
+              <div className="h-12 w-full animate-pulse rounded-lg bg-gray-700 md:w-64 lg:w-96" />
             </>
           )}
         </div>
