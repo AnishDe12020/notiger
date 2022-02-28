@@ -10,6 +10,7 @@ import Header from "../components/Header";
 import EventToast from "../components/EventToast";
 import { onMessage } from "firebase/messaging";
 import { messaging } from "../lib/firebase";
+import NotificationButton from "../components/NotificationButton";
 
 function Application({
   Component,
@@ -25,6 +26,7 @@ function Application({
     <SWRConfig value={{ fetcher: fetcher }}>
       <SessionProvider session={session}>
         <Header />
+        <NotificationButton />
         <NextNProgress color="#d1d5db" options={{ showSpinner: false }} />
         <Toaster
           toastOptions={{
