@@ -1,12 +1,6 @@
 importScripts("https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js")
 importScripts("https://www.gstatic.com/firebasejs/9.6.7/firebase-messaging-compat.js")
 
-// self.addEventListener('fetch', () => {
-//   const urlParams = new URLSearchParams(location.search);
-//   self.firebaseConfig = Object.fromEntries(urlParams);
-//   console.log("Firebase: ", self.firebaseConfig);
-// });
-
 const firebaseConfig = {
   apiKey: "AIzaSyA1mvBGjexDPV7vFF2c9oxwIa1_vu5BWPU",
   authDomain: "notiger-340507.firebaseapp.com",
