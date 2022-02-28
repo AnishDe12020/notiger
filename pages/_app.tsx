@@ -10,6 +10,8 @@ import Header from "../components/Header";
 import EventToast from "../components/EventToast";
 import { onMessage } from "firebase/messaging";
 import NotificationButton from "../components/NotificationButton";
+import { DefaultSeo } from "next-seo";
+import SEO from "../seo.config";
 
 function Application({
   Component,
@@ -26,6 +28,7 @@ function Application({
   return (
     <SWRConfig value={{ fetcher: fetcher }}>
       <SessionProvider session={session}>
+        <DefaultSeo {...SEO} />
         <Header />
         <NotificationButton />
         <NextNProgress color="#d1d5db" options={{ showSpinner: false }} />

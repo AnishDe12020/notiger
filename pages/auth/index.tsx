@@ -4,24 +4,29 @@ import { getSession, signIn, signOut, useSession } from "next-auth/react";
 // import { CgGoogle } from "react-icons/cg";
 import { ImGoogle } from "react-icons/im";
 import Button from "../../components/Button";
+import { NextSeo } from "next-seo";
 
 const AuthPage: NextPage = () => {
   const { data: session } = useSession();
   console.log(session);
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center">
-      {session ? (
-        <Button onClick={() => signOut()} danger>
-          Sign Out
-        </Button>
-      ) : (
-        <Button onClick={() => signIn("google")}>
-          <ImGoogle className="h-5 w-5" />
-          <span>Sign in with Google</span>
-        </Button>
-      )}
-    </div>
+    <>
+      <NextSeo title="Notiger | Authentication" />
+
+      <div className="flex h-screen flex-col items-center justify-center">
+        {session ? (
+          <Button onClick={() => signOut()} danger>
+            Sign Out
+          </Button>
+        ) : (
+          <Button onClick={() => signIn("google")}>
+            <ImGoogle className="h-5 w-5" />
+            <span>Sign in with Google</span>
+          </Button>
+        )}
+      </div>
+    </>
   );
 };
 
