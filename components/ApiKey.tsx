@@ -23,12 +23,12 @@ const ApiKey = ({ apiKey }: IApiKeyProps): JSX.Element => {
         {apiKey.key}
       </h3>
       <div className="flex space-x-1">
-        <Button className="bg-transparent !text-gray-300">
+        <Button className="!bg-transparent !text-gray-300">
           <IoCopy onClick={() => navigator.clipboard.writeText(apiKey.key)} />
         </Button>
         <Button
           onClick={() => setHidden(!hidden)}
-          className="bg-transparent !text-gray-300"
+          className="!bg-transparent !text-gray-300"
         >
           {hidden ? <HiEyeOff /> : <HiEye />}
         </Button>
