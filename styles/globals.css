@@ -17,3 +17,21 @@ body {
 body {
   @apply bg-black;
 }
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #4b8af1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b8af1ab;
+}
