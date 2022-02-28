@@ -7,7 +7,11 @@ const Header = (): JSX.Element => {
 
   return (
     <nav className="mx-8 mt-4 flex items-center justify-between md:mx-16">
-      <NavLink currentRoute={router.pathname} href="/">
+      <NavLink
+        currentRoute={router.pathname}
+        href="/"
+        className="!opacity-100 hover:!opacity-80"
+      >
         <Logo className="h-16 w-16" />
       </NavLink>
       <div className="flex space-x-4">
