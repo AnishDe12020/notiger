@@ -1,12 +1,31 @@
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { FaBell, FaLink, FaLock } from "react-icons/fa";
+import * as Accordion from "@radix-ui/react-accordion";
+import { HiChevronDown } from "react-icons/hi";
+
+const uses = [
+  {
+    heading: "Build Notifications",
+    content: "Get notified whenever a build completes in Netlify",
+  },
+  {
+    heading: "IoT Devices",
+    content:
+      "Say, there is a temperature sensor which sends out an event whenever the temperature crosses 30°C. This event will trigger a notification.",
+  },
+  {
+    heading: "Manufacturing",
+    content:
+      "3D printers take a long time to print an object. It can fire an event that triggers a notification as soon as the print is done.",
+  },
+];
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
   console.log(session);
   return (
-    <div className="flex flex-col items-center">
+    <div className="mx-6 flex flex-col items-center md:mx-16 lg:mx-32 xl:mx-48">
       <h1 className="mb-6 bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-text py-4 text-5xl font-bold text-transparent md:text-6xl lg:text-7xl">
         Notiger
       </h1>
@@ -48,6 +67,30 @@ const Home: NextPage = () => {
           </p>
         </div>
       </div>
+
+      <Accordion.Root
+        type="multiple"
+        className="mx-8 mt-32 w-2/3 space-y-4 md:mx-24 lg:mx-32 xl:mx-48"
+      >
+        <h3 className="text-xl font-medium text-gray-100 md:text-2xl lg:text-3xl">
+          Uses
+        </h3>
+        {uses.map(({ heading, content }, i) => (
+          <Accordion.Item key={heading} value={heading}>
+            <Accordion.Header className="w-full">
+              <Accordion.Trigger className="group inline-flex w-full items-center justify-between bg-secondary px-4 py-2 text-left">
+                <span className="text-md font-medium text-gray-100">
+                  {heading}
+                </span>
+                <HiChevronDown className="h-6 w-6 text-gray-100 transition duration-200 ease-in-out group-radix-state-open:rotate-180" />
+              </Accordion.Trigger>
+            </Accordion.Header>
+            <Accordion.Content className="w-full rounded-lg bg-secondary py-2 px-4">
+              <p className="text-gray-300">{content}</p>
+            </Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion.Root>
     </div>
   );
 };
