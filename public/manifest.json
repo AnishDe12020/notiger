@@ -1,0 +1,16 @@
+{
+  "name": "Notiger",
+  "short_name": "Notiger",
+  "icons": [
+    {
+      "src": "/logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
