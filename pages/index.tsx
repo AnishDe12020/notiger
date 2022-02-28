@@ -78,7 +78,7 @@ const Home: NextPage = () => {
         {uses.map(({ heading, content }) => (
           <Accordion.Item key={heading} value={heading}>
             <Accordion.Header className="w-full">
-              <Accordion.Trigger className="group inline-flex w-full items-center justify-between bg-secondary px-4 py-2 text-left radix-state-open:rounded-t-lg radix-state-closed:rounded-lg">
+              <Accordion.Trigger className="group inline-flex w-full items-center justify-between bg-secondary px-4 py-2 text-left transition duration-200 hover:opacity-60 radix-state-open:rounded-t-lg radix-state-closed:rounded-lg">
                 <span className="text-md font-medium text-gray-100">
                   {heading}
                 </span>
