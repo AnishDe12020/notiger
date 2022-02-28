@@ -70,7 +70,7 @@ const ProjectPage: NextPage = () => {
                   <button
                     key={stream._id}
                     className={cx(
-                      "mb-8 flex h-[150px] flex-col justify-between space-y-4 rounded-lg border-2 border-gray-700 p-4 transition duration-200 hover:border-gray-400 md:p-6"
+                      "mb-8 flex h-[150px] flex-col space-y-4 rounded-lg border-2 border-gray-700 p-4 transition duration-200 hover:border-gray-400 md:p-6"
                     )}
                   >
                     <h3 className="text-normal text-lg text-white">
