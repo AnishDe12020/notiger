@@ -50,7 +50,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
           apiKeyObject.save((err, apiKeyObject) => {
             if (err) {
-              console.log(err);
               return res.status(500).json({ error: err.message });
             } else {
               return res.status(200).json(apiKeyObject);

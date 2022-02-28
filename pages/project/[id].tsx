@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import useSWRImmutable from "swr/immutable";
@@ -14,8 +13,6 @@ import EventsDrawer from "../../components/Project/EventsDrawer";
 const STREAMS_URL = "/api/streams";
 
 const ProjectPage: NextPage = () => {
-  const { data: session } = useSession();
-
   const router = useRouter();
   const { id: projectId } = router.query;
 
@@ -36,8 +33,6 @@ const ProjectPage: NextPage = () => {
     console.error(streamsError);
     toast.error("Something went wrong!");
   }
-  console.log(streams);
-  console.log(session);
 
   return (
     <>

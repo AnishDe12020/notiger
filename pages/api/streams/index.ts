@@ -27,7 +27,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       case "POST":
         try {
-          console.log(req.body);
           const projectId = new ObjectId(req.body.projectId);
           const stream = new Stream({
             name: req.body.name,

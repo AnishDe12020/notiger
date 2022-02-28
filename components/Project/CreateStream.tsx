@@ -28,7 +28,7 @@ const CreateStream = ({ project }: ICreateStreamProps): JSX.Element => {
 
   const handleCreateStreamSubmit = async (values, { setSubmitting }) => {
     // @ts-ignore
-    const { data, error } = await axios.post(STREAMS_URL, {
+    const { error } = await axios.post(STREAMS_URL, {
       name: values.name,
       description: values.description,
       projectId: project._id,
@@ -40,7 +40,6 @@ const CreateStream = ({ project }: ICreateStreamProps): JSX.Element => {
     } else {
       mutate(`${STREAMS_URL}?projectId=${project._id}`);
       toast.success("Stream created!");
-      console.log(data);
     }
 
     setSubmitting(false);

@@ -19,11 +19,10 @@ const dbConnect = async () => {
     cached.promise = mongoose
       .connect(process.env.MONGODB_URI, opts)
       .then(mongoose => {
-        console.log("Connected to MongoDB");
         return mongoose;
       })
       .catch(err => {
-        console.log("Error connecting to MongoDB: ", err.message);
+        console.error("Error connecting to MongoDB: ", err.message);
       });
   }
   cached.conn = await cached.promise;

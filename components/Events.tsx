@@ -21,8 +21,6 @@ const Events = ({ streamId }: IEventsProps): JSX.Element => {
 
   const { mutate } = useSWRConfig();
 
-  console.log(events);
-
   if (error) {
     console.error(error);
     toast.error("Something went wrong!");
@@ -30,8 +28,6 @@ const Events = ({ streamId }: IEventsProps): JSX.Element => {
 
   const createTestEvent = async () => {
     const res = await axios.post("/api/apiKey");
-
-    console.log(res);
 
     await axios.post(
       `/api/events?streamId=${streamId}&apiKey=${res.data.key}`,

@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import { useSession } from "next-auth/react";
 import { FaBell, FaLink, FaLock } from "react-icons/fa";
 import * as Accordion from "@radix-ui/react-accordion";
 import { HiChevronDown } from "react-icons/hi";
@@ -22,8 +21,6 @@ const uses = [
 ];
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
-  console.log(session);
   return (
     <div className="mx-6 flex flex-col items-center md:mx-16 lg:mx-32 xl:mx-48">
       <h1 className="mb-6 bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-text py-4 text-5xl font-bold text-transparent md:text-6xl lg:text-7xl">

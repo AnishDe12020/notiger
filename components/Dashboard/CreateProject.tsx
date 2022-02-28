@@ -28,7 +28,7 @@ const CreateProject = ({ session }: ICreateProjectProps): JSX.Element => {
 
   const handleCreateProjectSubmit = async (values, { setSubmitting }) => {
     // @ts-ignore
-    const { data, error } = await axios.post(PROJECTS_URL, {
+    const { error } = await axios.post(PROJECTS_URL, {
       name: values.name,
       description: values.description,
       // @ts-ignore
@@ -42,7 +42,6 @@ const CreateProject = ({ session }: ICreateProjectProps): JSX.Element => {
       // @ts-ignore
       mutate(`${PROJECTS_URL}?ownerId=${session.token.user.id}`);
       toast.success("Project created!");
-      console.log(data);
     }
 
     setSubmitting(false);

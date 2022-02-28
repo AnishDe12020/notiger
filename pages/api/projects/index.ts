@@ -26,7 +26,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       case "POST":
         try {
-          console.log(req.body);
           const ownerId = new ObjectId(req.body.ownerId);
           const project = new Project({
             name: req.body.name,
@@ -36,7 +35,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
           project.save((err, project) => {
             if (err) {
-              console.log(err);
               return res.status(400).json({ error: err.message });
             } else {
               return res.status(200).json(project);

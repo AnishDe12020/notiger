@@ -11,7 +11,6 @@ const PROJECTS_URL = "/api/projects";
 
 const DashboardPage: NextPage = () => {
   const { data: session } = useSession();
-  console.log(session);
 
   const { data: projects, error } = useSWR(
     session &&

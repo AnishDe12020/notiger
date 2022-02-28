@@ -13,14 +13,10 @@ export default NextAuth({
   ],
   callbacks: {
     async session({ session, token, user }) {
-      console.log("User in session callback", user);
-      console.log("Token in session callback: ", token);
       session.token = token;
       return session;
     },
     async jwt({ token, user }) {
-      console.log("User: ", user);
-      console.log("Token: ", token);
       if (user) {
         token.user = user;
       }

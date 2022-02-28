@@ -15,8 +15,7 @@ const ApiKeyPage: NextPage = () => {
   }
 
   const generateApiKey = async () => {
-    const res = await axios.post("/api/apiKey");
-    console.log(res);
+    await axios.post("/api/apiKey");
     mutate("/api/apiKey");
   };
 

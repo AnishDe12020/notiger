@@ -17,8 +17,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     query: { streamId },
   } = req;
 
-  console.log(streamId);
-
   if (!streamId) {
     return res.status(400).json({
       error: "Missing streamId",
@@ -65,7 +63,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               error: "Invalid API key",
             });
           } else {
-            console.log(await ApiKey.exists({ key: apiKey }));
             const streamIdFormatted = new ObjectId(streamId as string);
             const body = req.body;
             if (typeof body === "object") {
@@ -87,13 +84,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                   _id: streamIdFormatted,
                 });
 
-                console.log(stream);
-
                 const registrationTokens = await FCMToken.find({
                   ownerId: stream.ownerId,
                 });
-
-                console.log(registrationTokens);
 
                 messaging
                   .sendMulticast({

@@ -3,7 +3,6 @@ import { getToken } from "firebase/messaging";
 import localforage from "localforage";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { messaging } from "../lib/firebase";
 
 const useNotifications = () => {
   const [isSetup, setIsSetup] = useState<boolean>();

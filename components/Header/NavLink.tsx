@@ -16,7 +16,6 @@ const NavLink = ({
   className,
 }: INavLinkProps): JSX.Element => {
   const active = currentRoute === href;
-  console.log(currentRoute);
   return (
     <Link href={href} passHref>
       <a
