@@ -22,9 +22,9 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>(
         className={cx(
           "flex items-center justify-center space-x-3 rounded-lg px-3 py-1",
           "text-lg font-medium text-gray-900 transition duration-200 hover:opacity-60",
-          className,
           danger ? "bg-red-500" : "bg-gray-100",
-          loading && "cursor-not-allowed opacity-60"
+          loading && "cursor-not-allowed opacity-60",
+          className
         )}
         type={type}
         ref={ref}
