@@ -1,12 +1,10 @@
 import toast from "react-hot-toast";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 
 import dynamic from "next/dynamic";
 import Twemoji from "react-twemoji";
 import getCreatedAtFromMongoId from "../utils/getCreatedAtFromMongoId";
 import { ObjectId } from "mongodb";
-import axios from "axios";
-import Button from "./Button";
 import EventsAPIExample from "./Project/EventsAPIExample";
 
 const ReactJson = dynamic(() => import("react-json-view"), { ssr: false });
@@ -20,43 +18,16 @@ const Events = ({ streamId }: IEventsProps): JSX.Element => {
     streamId && `/api/events?streamId=${streamId}`
   );
 
-  const { mutate } = useSWRConfig();
-
   if (error) {
     console.error(error);
     toast.error("Something went wrong!");
   }
 
-  const createTestEvent = async () => {
-    const res = await axios.post("/api/apiKey");
-
-    await axios.post(
-      `/api/events?streamId=${streamId}&apiKey=${res.data.key}`,
-      {
-        name: "Test Event",
-        description: "This is a test event.",
-        icon: "🎉",
-        payload: {
-          key: "some custom payload",
-        },
-      }
-    );
-
-    await axios.delete(`/api/apiKey/${res.data._id}`);
-
-    mutate(`/api/events?streamId=${streamId}`);
-  };
-
   return (
     <div className="flex w-full flex-col justify-center">
-      <div className="flex flex-row justify-center space-x-4 md:justify-start">
-        <Button className="mb-8 w-fit" onClick={createTestEvent}>
-          Create a test event
-        </Button>
-        <EventsAPIExample streamId={streamId as unknown as string} />
-      </div>
+      <EventsAPIExample streamId={streamId as unknown as string} />
 
-      <div className="flex flex-col space-y-8">
+      <div className="mt-4 flex flex-col space-y-8">
         {events ? (
           events.length > 0 ? (
             events.map(event => (
@@ -117,9 +88,6 @@ const Events = ({ streamId }: IEventsProps): JSX.Element => {
               <h2 className="text-semibold text-center text-lg text-white md:text-xl lg:text-2xl">
                 No events yet
               </h2>
-              <Button className="w-fit self-center" onClick={createTestEvent}>
-                Create a test event
-              </Button>
             </>
           )
         ) : (
