@@ -91,6 +91,30 @@ const Home: NextPage = () => {
           </Accordion.Item>
         ))}
       </Accordion.Root>
+
+      <div
+        id="footer"
+        className="my-8 flex flex-col items-center justify-center space-y-2 text-gray-100"
+      >
+        <p>
+          Made by{" "}
+          <a
+            className="text-blue-500 transition duration-200 hover:opacity-60"
+            href="https://twitter.com/AnishDe12020"
+          >
+            Anish De
+          </a>
+        </p>
+        <p>
+          Check out the{" "}
+          <a
+            className="text-blue-500 transition duration-200 hover:opacity-60"
+            href="https://github.com/AnishDe12020/notiger"
+          >
+            Source Code
+          </a>
+        </p>
+      </div>
     </div>
   );
 };
