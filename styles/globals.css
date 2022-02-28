@@ -35,3 +35,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #4b8af1ab;
 }
+
+code {
+  @apply rounded-lg bg-gray-500 px-2 py-1 text-gray-900;
+}

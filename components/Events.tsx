@@ -7,6 +7,7 @@ import getCreatedAtFromMongoId from "../utils/getCreatedAtFromMongoId";
 import { ObjectId } from "mongodb";
 import axios from "axios";
 import Button from "./Button";
+import EventsAPIExample from "./Project/EventsAPIExample";
 
 const ReactJson = dynamic(() => import("react-json-view"), { ssr: false });
 
@@ -48,9 +49,12 @@ const Events = ({ streamId }: IEventsProps): JSX.Element => {
 
   return (
     <div className="flex w-full flex-col justify-center">
-      <Button className="mb-8 w-fit" onClick={createTestEvent}>
-        Create a test event
-      </Button>
+      <div className="flex flex-row justify-center space-x-4 md:justify-start">
+        <Button className="mb-8 w-fit" onClick={createTestEvent}>
+          Create a test event
+        </Button>
+        <EventsAPIExample streamId={streamId as unknown as string} />
+      </div>
 
       <div className="flex flex-col space-y-8">
         {events ? (
