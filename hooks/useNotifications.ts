@@ -8,6 +8,30 @@ import { messaging } from "../lib/firebase";
 const useNotifications = () => {
   const [isSetup, setIsSetup] = useState<boolean>();
 
+  useEffect(() => {
+    const checkIsSetup = async () => {
+      console.log(
+        "Token in local forage: ",
+        await localforage.getItem("fcmToken")
+      );
+
+      if (
+        (await localforage.getItem("fcmToken")) &&
+        isSupported() &&
+        isPermissionGranted() &&
+        (await navigator.serviceWorker.getRegistration(
+          "firebase-messaging-sw.js"
+        ))
+      ) {
+        setIsSetup(true);
+      } else {
+        setIsSetup(false);
+      }
+    };
+
+    checkIsSetup();
+  });
+
   const getTokenInLocalForage = async () => {
     return localforage.getItem("fcmToken");
   };
@@ -21,18 +45,20 @@ const useNotifications = () => {
       }
 
       if (status && status === "granted") {
-        const fcmToken = await getToken(messaging, {
-          vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-        });
-
-        if (fcmToken) {
-          await axios.post("/api/fcmtokens", {
-            fcmToken: fcmToken,
+        import("../lib/firebase").then(async ({ messaging }) => {
+          const fcmToken = await getToken(messaging, {
+            vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
           });
 
-          localforage.setItem("fcmToken", fcmToken);
-          return fcmToken;
-        }
+          if (fcmToken) {
+            await axios.post("/api/fcmtokens", {
+              fcmToken: fcmToken,
+            });
+
+            localforage.setItem("fcmToken", fcmToken);
+            return fcmToken;
+          }
+        });
       }
     } catch (err) {
       console.error(err);
@@ -67,30 +93,6 @@ const useNotifications = () => {
   const isPermissionGranted = () => {
     return Notification.permission === "granted";
   };
-
-  useEffect(() => {
-    const checkIsSetup = async () => {
-      console.log(
-        "Token in local forage: ",
-        await localforage.getItem("fcmToken")
-      );
-
-      if (
-        (await localforage.getItem("fcmToken")) &&
-        isSupported() &&
-        isPermissionGranted() &&
-        (await navigator.serviceWorker.getRegistration(
-          "firebase-messaging-sw.js"
-        ))
-      ) {
-        setIsSetup(true);
-      } else {
-        setIsSetup(false);
-      }
-    };
-
-    checkIsSetup();
-  });
 
   return {
     setUpNotifications,

@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import Header from "../components/Header";
 import EventToast from "../components/EventToast";
 import { onMessage } from "firebase/messaging";
-import { messaging } from "../lib/firebase";
 import NotificationButton from "../components/NotificationButton";
 
 function Application({
@@ -17,8 +16,10 @@ function Application({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   useEffect(() => {
-    onMessage(messaging, payload => {
-      toast.custom(t => <EventToast t={t} payload={payload} />);
+    import("../lib/firebase").then(({ messaging }) => {
+      onMessage(messaging, payload => {
+        toast.custom(t => <EventToast t={t} payload={payload} />);
+      });
     });
   }, []);
 
