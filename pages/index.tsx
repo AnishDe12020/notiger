@@ -72,10 +72,10 @@ const Home: NextPage = () => {
         type="multiple"
         className="mx-8 mt-32 w-2/3 space-y-4 md:mx-24 lg:mx-32 xl:mx-48"
       >
-        <h3 className="text-xl font-medium text-gray-100 md:text-2xl lg:text-3xl">
+        <h3 className="text-2xl font-medium text-gray-100 md:text-3xl lg:text-4xl">
           Uses
         </h3>
-        {uses.map(({ heading, content }, i) => (
+        {uses.map(({ heading, content }) => (
           <Accordion.Item key={heading} value={heading}>
             <Accordion.Header className="w-full">
               <Accordion.Trigger className="group inline-flex w-full items-center justify-between bg-secondary px-4 py-2 text-left radix-state-open:rounded-t-lg radix-state-closed:rounded-lg">
