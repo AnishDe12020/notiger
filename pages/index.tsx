@@ -78,14 +78,14 @@ const Home: NextPage = () => {
         {uses.map(({ heading, content }, i) => (
           <Accordion.Item key={heading} value={heading}>
             <Accordion.Header className="w-full">
-              <Accordion.Trigger className="group inline-flex w-full items-center justify-between bg-secondary px-4 py-2 text-left">
+              <Accordion.Trigger className="group inline-flex w-full items-center justify-between bg-secondary px-4 py-2 text-left radix-state-open:rounded-t-lg radix-state-closed:rounded-lg">
                 <span className="text-md font-medium text-gray-100">
                   {heading}
                 </span>
                 <HiChevronDown className="h-6 w-6 text-gray-100 transition duration-200 ease-in-out group-radix-state-open:rotate-180" />
               </Accordion.Trigger>
             </Accordion.Header>
-            <Accordion.Content className="w-full rounded-lg bg-secondary py-2 px-4">
+            <Accordion.Content className="w-full rounded-b-lg bg-secondary py-2 px-4">
               <p className="text-gray-300">{content}</p>
             </Accordion.Content>
           </Accordion.Item>
