@@ -10,6 +10,9 @@ const Header = (): JSX.Element => {
         <NavLink currentRoute={router.pathname} href="/dashboard">
           Dashboard
         </NavLink>
+        <NavLink currentRoute={router.pathname} href="/apikey">
+          API Keys
+        </NavLink>
       </div>
     </nav>
   );
