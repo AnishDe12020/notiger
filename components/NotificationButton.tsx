@@ -1,15 +1,15 @@
 import useNotifications from "../hooks/useNotifications";
 import Button from "./Button";
 import { HiBell } from "react-icons/hi";
+import { useSession } from "next-auth/react";
 
 const NotificationButton = (): JSX.Element => {
-  let { isSetup, setUpNotifications } = useNotifications();
-
-  isSetup = false;
+  const { isSetup, setUpNotifications } = useNotifications();
+  const { data: session } = useSession();
 
   return (
     <>
-      {!isSetup && (
+      {!isSetup && session && (
         <Button
           className="group absolute right-8 bottom-8 h-12 w-12 rounded-full"
           onClick={setUpNotifications}
