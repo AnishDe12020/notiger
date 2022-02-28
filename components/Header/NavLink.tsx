@@ -21,7 +21,7 @@ const NavLink = ({
     <Link href={href} passHref>
       <a
         className={cx(
-          "rounded-lg px-4 py-3 text-white transition duration-200 hover:opacity-60",
+          "lg:text-md rounded-lg px-2 py-3 text-xs text-white transition duration-200 hover:opacity-60 md:px-4 md:text-sm",
           active ? "opacity-100" : "opacity-80",
           className
         )}

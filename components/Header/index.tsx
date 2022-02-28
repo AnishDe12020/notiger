@@ -15,7 +15,7 @@ const Header = (): JSX.Element => {
         href="/"
         className="!opacity-100 hover:!opacity-80"
       >
-        <Logo className="h-16 w-16" />
+        <Logo className="h-8 w-8 md:h-12 md:w-12 lg:h-16 lg:w-16" />
       </NavLink>
       <div className="flex space-x-4">
         {session ? (
@@ -28,7 +28,7 @@ const Header = (): JSX.Element => {
             </NavLink>
             <Button
               onClick={signOut}
-              className="!bg-transparent !font-normal !text-gray-100 !opacity-80 hover:!opacity-60"
+              className="lg:text-md !bg-transparent text-xs !font-normal !text-gray-100 !opacity-80 hover:!opacity-60 md:text-sm"
             >
               Sign Out
             </Button>
