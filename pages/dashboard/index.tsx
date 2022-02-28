@@ -26,7 +26,7 @@ const DashboardPage: NextPage = () => {
   return (
     <>
       <NextSeo title="Notiger | Dashboard" />
-      <div className="mx-8 mt-16 flex flex-col justify-center space-y-16 md:mx-32 lg:mx-64 xl:mx-96">
+      <div className="mx-8 mt-16 flex flex-col justify-center space-y-16 md:mx-16">
         <div className="flex justify-end">
           <CreateProject session={session} />
         </div>

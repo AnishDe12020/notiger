@@ -23,7 +23,7 @@ const ApiKeyPage: NextPage = () => {
   return (
     <>
       <NextSeo title="Notiger | API Keys" />
-      <div className="mx-8 mt-32 flex flex-col space-y-16 md:mx-16 lg:mx-32">
+      <div className="mx-8 mt-32 flex flex-col space-y-16 md:mx-16">
         <Button onClick={generateApiKey} className="md:w-fit">
           Generate API Key
         </Button>
