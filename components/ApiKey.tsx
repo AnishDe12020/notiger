@@ -4,6 +4,7 @@ import cx from "classnames";
 import Button from "./Button";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import { IoCopy } from "react-icons/io5";
+import toast from "react-hot-toast";
 
 interface IApiKeyProps {
   apiKey: IApiKey;
@@ -24,7 +25,12 @@ const ApiKey = ({ apiKey }: IApiKeyProps): JSX.Element => {
       </h3>
       <div className="flex space-x-1">
         <Button className="!bg-transparent !text-gray-300">
-          <IoCopy onClick={() => navigator.clipboard.writeText(apiKey.key)} />
+          <IoCopy
+            onClick={() => {
+              navigator.clipboard.writeText(apiKey.key);
+              toast.success("Copied to clipboard");
+            }}
+          />
         </Button>
         <Button
           onClick={() => setHidden(!hidden)}
