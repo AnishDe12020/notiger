@@ -29,7 +29,7 @@ const Home: NextPage = () => {
       <h1 className="mb-6 bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-text py-4 text-5xl font-bold text-transparent md:text-6xl lg:text-7xl">
         Notiger
       </h1>
-      <h2 className="text-2xl font-normal text-gray-300 md:text-3xl lg:text-4xl">
+      <h2 className="text-center text-2xl font-normal text-gray-300 md:text-3xl lg:text-4xl">
         Get{" "}
         <span className="bg-gradient-to-tr from-green-400 to-green-600 bg-clip-text text-3xl font-medium text-transparent md:text-4xl lg:text-5xl">
           realtime notifications
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
         on events from your application
       </h2>
 
-      <div className="mt-32 flex flex-wrap space-x-24">
+      <div className="mt-32 flex flex-col space-y-8 md:flex-row md:space-y-0 md:space-x-8 lg:space-x-16 xl:space-x-24">
         <div className="flex w-64 flex-col items-center justify-center space-y-2">
           <FaLink className="mb-2 h-10 w-10 text-white" />
           <h3 className="text-xl font-semibold text-gray-100">
@@ -72,7 +72,7 @@ const Home: NextPage = () => {
         type="multiple"
         className="mx-8 mt-32 w-2/3 space-y-4 md:mx-24 lg:mx-32 xl:mx-48"
       >
-        <h3 className="text-2xl font-medium text-gray-100 md:text-3xl lg:text-4xl">
+        <h3 className="text-center text-2xl font-medium text-gray-100 md:text-left md:text-3xl lg:text-4xl">
           Uses
         </h3>
         {uses.map(({ heading, content }) => (
