@@ -11,7 +11,7 @@ const NotificationButton = (): JSX.Element => {
     <>
       {!isSetup && session && (
         <Button
-          className="group absolute right-8 bottom-8 h-12 w-12 rounded-full"
+          className="group fixed right-8 bottom-8 h-12 w-12 rounded-full"
           onClick={setUpNotifications}
           aria-label="Enable Push Notifications"
         >
