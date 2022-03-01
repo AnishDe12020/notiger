@@ -686,17 +686,17 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@netlify/functions@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/@netlify/functions/-/functions-0.11.0.tgz#224f3bba53809b364d36377ad0b2d3de594f994d"
-  integrity sha512-+WWX081UCkLZYkfh1Ru+PH5HTujNXugeskATGhZLTyS1U3Cqh2gYLArdG1a/vU8WWopu/wjpxEOdWq8/T5Nw5Q==
-  dependencies:
-    is-promise "^4.0.0"
-
 "@netlify/functions@^0.7.2":
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/@netlify/functions/-/functions-0.7.2.tgz#9d39553b94e7aaa86dddf515bdbaed3e89998122"
   integrity sha512-xf45ZqQukMxmlkqNMC5BXdFMaVZ8VqF42MV5zA5nKVOh2V0mhYlcbTYlVbS/K2/rtvQ3W8lxxixYl4NT7kq6Bg==
+  dependencies:
+    is-promise "^4.0.0"
+
+"@netlify/functions@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@netlify/functions/-/functions-1.0.0.tgz#5b6c02fafc567033c93b15a080cc021e5f10f254"
+  integrity sha512-7fnJv3vr8uyyyOYPChwoec6MjzsCw1CoRUO2DhQ1BD6bOyJRlD4DUaOOGlMILB2LCT8P24p5LexEGx8AJb7xdA==
   dependencies:
     is-promise "^4.0.0"
 
@@ -715,12 +715,12 @@
     ufo "^0.7.10"
     unstorage "^0.2.8"
 
-"@netlify/plugin-nextjs@^4.0.0":
-  version "4.2.5"
-  resolved "https://registry.yarnpkg.com/@netlify/plugin-nextjs/-/plugin-nextjs-4.2.5.tgz#4031d7d4da8623e6daf2e4445ab007e7d76747a6"
-  integrity sha512-+UHVGqbOSNT2dylPjzKxSg9LvBxKN2Cqk3gZURhv67tn5mliQfXfBrzh6SSUINWT8eeTmYSbv55X6VH6tFhZiw==
+"@netlify/plugin-nextjs@^4.2.7":
+  version "4.2.7"
+  resolved "https://registry.yarnpkg.com/@netlify/plugin-nextjs/-/plugin-nextjs-4.2.7.tgz#6227fab63583239108f420941dd73fb30b89906d"
+  integrity sha512-KxIy3VCqT0nrDpn40yesYAy4hMYGP2ESvC8mwPNMfEyI3OXxqm8vpLjcFXn6PoGPp6Cl6djDCvZ7VSN9Dq17Ng==
   dependencies:
-    "@netlify/functions" "^0.11.0"
+    "@netlify/functions" "^1.0.0"
     "@netlify/ipx" "^0.0.9"
     "@vercel/node-bridge" "^2.1.0"
     chalk "^4.1.2"
