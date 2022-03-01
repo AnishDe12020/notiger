@@ -2,6 +2,7 @@
 Notiger lets you receive realtime notifications on events from your applications via webhooks.
 
 Live demo - [https://www.notiger.xyz/](https://www.notiger.xyz/)
+
 Read the blog post - [https://blog.anishde.dev/notiger-get-realtime-notifications-on-events-from-your-application](https://blog.anishde.dev/notiger-get-realtime-notifications-on-events-from-your-application)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/717071eb-6882-4b73-a615-a1484cfb3d2f/deploy-status)](https://app.netlify.com/sites/notiger/deploys)
