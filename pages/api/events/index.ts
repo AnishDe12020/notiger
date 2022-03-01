@@ -88,12 +88,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                   ownerId: stream.ownerId,
                 });
 
-                messaging
-                  .sendMulticast({
-                    data: body,
-                    tokens: registrationTokens.map(token => token.token),
-                  })
-                  .then(res => console.log(res));
+                if (registrationTokens.length > 0) {
+                  messaging
+                    .sendMulticast({
+                      data: body,
+                      tokens: registrationTokens.map(token => token.token),
+                    })
+                    .then(res => console.log(res));
+                }
               } else {
                 throw new Error("Body too large. Keep it under 16384 bytes");
               }
