@@ -12,6 +12,7 @@ import { onMessage } from "firebase/messaging";
 import NotificationButton from "../components/NotificationButton";
 import { DefaultSeo } from "next-seo";
 import SEO from "../seo.config";
+import Script from "next/script";
 
 function Application({
   Component,
@@ -28,6 +29,14 @@ function Application({
   return (
     <SWRConfig value={{ fetcher: fetcher }}>
       <SessionProvider session={session}>
+        {process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL &&
+          process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
+            <Script
+              src={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}
+              data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+              strategy="lazyOnload"
+            />
+          )}
         <DefaultSeo {...SEO} />
         <Header />
         <NotificationButton />
