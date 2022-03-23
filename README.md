@@ -1,13 +1,18 @@
-# Next + Netlify Starter
+# Notiger
+Notiger lets you receive realtime notifications on events from your applications via webhooks.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/46648482-644c-4c80-bafb-872057e51b6b/deploy-status)](https://app.netlify.com/sites/next-dev-starter/deploys)
+Live demo - [https://www.notiger.xyz/](https://www.notiger.xyz/)
 
-This is a [Next.js](https://nextjs.org/) v12 project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and set up to be instantly deployed to [Netlify](https://url.netlify.com/SyTBPVamO)!
+Read the blog post - [https://blog.anishde.dev/notiger-get-realtime-notifications-on-events-from-your-application](https://blog.anishde.dev/notiger-get-realtime-notifications-on-events-from-your-application)
 
-This project is a very minimal starter that includes 2 sample components, a global stylesheet, a `netlify.toml` for deployment, and a `jsconfig.json` for setting up absolute imports and aliases. It also includes the [Essential Next.js Build Plugin](https://github.com/netlify/netlify-plugin-nextjs), which will allow for you to implement features like Preview Mode, server-side rendering/incremental static regeneration via Netlify Functions, and internationalized routing.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/717071eb-6882-4b73-a615-a1484cfb3d2f/deploy-status)](https://app.netlify.com/sites/notiger/deploys)
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/next-netlify-starter&utm_source=github&utm_medium=nextstarter-cs&utm_campaign=devex-cs)
+Features:
+- Receive realtime notifications on events from your application
+- Easily to implement
+- Events are stored securely
 
+<<<<<<< HEAD
 (If you click this button, it will create a new repo for you that looks exactly like this one, and sets that repo up immediately for deployment on Netlify)
 
 ## Getting Started
@@ -40,3 +45,9 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 
 This project uses [Twemoji](https://twemoji.twitter.com/) which is under the
 CC-BY 4.0 License.
+=======
+Use cases:
+- Build Notifications - Get notified whenever a build completes in Netlify
+- IoT Devices - Say, there is a temperature sensor which sends out an event whenever the temperature crosses 30°C. This event will trigger a notification.
+- Manufacturing - 3D printers take a long time to print an object. It can fire an event that triggers a notification as soon as the print is done.
+>>>>>>> 8f2b3818d3d604f5cef9223c878212adebe2a0e5
