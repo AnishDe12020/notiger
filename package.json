@@ -32,7 +32,7 @@
     "mongodb": "^4.3.1",
     "mongoose": "^6.4.6",
     "next": "^12.1.0",
-    "next-auth": "^4.9.0",
+    "next-auth": "^4.20.1",
     "next-seo": "^5.1.0",
     "nextjs-progressbar": "^0.0.13",
     "object-sizeof": "^1.6.3",
